@@ -15,3 +15,256 @@ model HelloMessage {
 
   @@map("hello_messages")
 }
+
+model Employee {
+  id                       Int             @id @default(autoincrement())
+  login                    String          @unique
+  fname                    String
+  customersCount           Int             @default(0) @map("customers_count")
+  financeCustomersCount    Int             @default(0) @map("finance_customers_count")
+  aclPermissions           Json?           @map("acl_permissions")
+  phoneExtDesk             String?         @map("phone_ext_desk")
+  phoneExt                 Json?           @map("phone_ext")
+  email                    String?
+  language                 String?
+  google2faEnable          Boolean         @default(false) @map("google2fa_enable")
+  additionalSecurityEnable Boolean         @default(false) @map("additional_security_enable")
+  department               String?         @map("group")
+  active                   Boolean         @default(true)
+  passwordRevoked          Boolean         @default(false) @map("password_revoked")
+  createdAt                DateTime        @default(now()) @map("created_at") @db.Timestamptz(3)
+  lastLogin                DateTime?       @map("last_login") @db.Timestamptz(3)
+  actions                  Json?
+  sipProviders             Json?           @map("sip_providers")
+  updatedAt                DateTime        @updatedAt @map("updated_at") @db.Timestamptz(3)
+  campaigns                Campaign[]
+  brokerTransactions       Transaction[]   @relation("TransactionBrokerEmployee")
+  assignedTransactions     Transaction[]   @relation("TransactionAssignedEmployee")
+  createdTransactions      Transaction[]   @relation("TransactionCreatedByEmployee")
+  communications           Communication[]
+
+  @@map("employees")
+}
+
+model Desk {
+  id                Int      @id @default(autoincrement())
+  deskName          String   @map("desk_name")
+  active            Boolean  @default(true)
+  chatEnabled       Boolean  @default(false) @map("chat_enabled")
+  minDeposit        Decimal? @map("min_deposit") @db.Decimal(12, 2)
+  maxDeposit        Decimal? @map("max_deposit") @db.Decimal(12, 2)
+  customersCount    Int      @default(0) @map("customers_count")
+  linkTradePlatform String?  @map("link_trade_platform")
+  linkMtAccount     String?  @map("link_mt_account")
+  createdAt         DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt         DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+  traders           Trader[]
+
+  @@map("desks")
+}
+
+model Campaign {
+  id              Int             @id @default(autoincrement())
+  name            String
+  cost            Decimal         @default(0) @db.Decimal(12, 2)
+  calculationType String          @map("calculation_type")
+  customerCount   Int             @default(0) @map("customer_count")
+  ftdCount        Int             @default(0) @map("ftd_count")
+  redepositCount  Int             @default(0) @map("redeposit_count")
+  creatorId       Int?            @map("creator_id")
+  creator         Employee?       @relation(fields: [creatorId], references: [id])
+  createdAt       DateTime        @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt       DateTime        @updatedAt @map("updated_at") @db.Timestamptz(3)
+  traders         Trader[]
+  communications  Communication[]
+
+  @@index([creatorId])
+  @@map("campaigns")
+}
+
+model Trader {
+  id                    Int                @id @default(autoincrement())
+  mt5Login              Json?              @map("mt5_login")
+  promoCode             String?            @map("promo_code")
+  fname                 String?
+  selfStatus            String?            @map("self_status")
+  email                 String?
+  phone                 String?
+  campaignId            Int?               @map("campaign_id")
+  campaign              Campaign?          @relation(fields: [campaignId], references: [id])
+  brokerEmployee        Json?              @map("broker_employee")
+  financeEmployee       Json?              @map("finance_employee")
+  deskId                Int?               @map("desk_id")
+  desk                  Desk?              @relation(fields: [deskId], references: [id])
+  country               String?
+  city                  String?
+  tradingServer         String?            @map("trading_server")
+  balance               Decimal            @default(0) @db.Decimal(12, 2)
+  currency              String?
+  totalDeposits         Decimal            @default(0) @map("total_deposits") @db.Decimal(12, 2)
+  totalWithdrawals      Decimal            @default(0) @map("total_withdrawals") @db.Decimal(12, 2)
+  totalBonuses          Decimal            @default(0) @map("total_bonuses") @db.Decimal(12, 2)
+  validationStatus      String?            @map("validation_status")
+  retentionStatus       String?            @map("retention_status")
+  potentialStatus       String?            @map("potential_status")
+  forcedStrategy        String?            @map("forced_strategy")
+  active                Boolean            @default(true)
+  activeTrading         Boolean            @default(false) @map("active_trading")
+  activeDeposit         Boolean            @default(false) @map("active_deposit")
+  lastLogin             DateTime?          @map("last_login") @db.Timestamptz(3)
+  lastCommunication     String?            @map("last_communication")
+  lastReminderStartAt   DateTime?          @map("last_reminder_start_at") @db.Timestamptz(3)
+  note                  String?
+  memo                  String?
+  lastCommunicationDate DateTime?          @map("last_communication_date") @db.Timestamptz(3)
+  importAAid            String?            @map("import_a_aid")
+  importABid            String?            @map("import_a_bid")
+  importACid            String?            @map("import_a_cid")
+  createdAt             DateTime           @default(now()) @map("created_at") @db.Timestamptz(3)
+  ftdDate               DateTime?          @map("ftd_date") @db.Timestamptz(3)
+  lastChangeBrokerDate  DateTime?          @map("last_change_broker_date") @db.Timestamptz(3)
+  lastChangeDeskDate    DateTime?          @map("last_change_desk_date") @db.Timestamptz(3)
+  lastIp                String?            @map("last_ip")
+  lastOpenDateTrade     DateTime?          @map("last_open_date_trade") @db.Timestamptz(3)
+  reDepositDate         DateTime?          @map("re_deposit_date") @db.Timestamptz(3)
+  resident              String?
+  markFtdEmployee       Json?              @map("mark_ftd_employee")
+  registrationCity      String?            @map("registration_city")
+  registrationIp        String?            @map("registration_ip")
+  updatedAt             DateTime           @updatedAt @map("updated_at") @db.Timestamptz(3)
+  tradingAccounts       TradingAccount[]
+  transactions          Transaction[]
+  customerDocuments     CustomerDocument[]
+  communications        Communication[]
+
+  @@index([campaignId])
+  @@index([deskId])
+  @@map("traders")
+}
+
+model TradingAccount {
+  id           Int           @id @default(autoincrement())
+  login        String
+  traderId     Int           @map("trader_id")
+  trader       Trader        @relation(fields: [traderId], references: [id])
+  currency     String?
+  accountGroup String?       @map("group")
+  balance      Decimal       @default(0) @db.Decimal(12, 2)
+  equity       Decimal       @default(0) @db.Decimal(12, 2)
+  volume       Decimal       @default(0) @db.Decimal(12, 2)
+  margin       Decimal       @default(0) @db.Decimal(12, 2)
+  marginFree   Decimal       @default(0) @map("margin_free") @db.Decimal(12, 2)
+  marginLevel  Decimal       @default(0) @map("margin_level") @db.Decimal(12, 2)
+  actions      Json?
+  createdAt    DateTime      @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime      @updatedAt @map("updated_at") @db.Timestamptz(3)
+  transactions Transaction[]
+
+  @@index([traderId])
+  @@map("trading_accounts")
+}
+
+model Transaction {
+  id                  Int             @id @default(autoincrement())
+  value               Decimal         @default(0) @db.Decimal(12, 2)
+  baseCurrencyValue   Decimal         @default(0) @map("base_currency_value") @db.Decimal(12, 2)
+  transactionType     String?         @map("type")
+  country             String?
+  customerId          Int             @map("customer_id")
+  customer            Trader          @relation(fields: [customerId], references: [id])
+  brokerEmployeeId    Int?            @map("broker_employee_id")
+  brokerEmployee      Employee?       @relation("TransactionBrokerEmployee", fields: [brokerEmployeeId], references: [id])
+  employeeId          Int?            @map("employee_id")
+  employee            Employee?       @relation("TransactionAssignedEmployee", fields: [employeeId], references: [id])
+  createdByEmployeeId Int?            @map("created_by_employee_id")
+  createdByEmployee   Employee?       @relation("TransactionCreatedByEmployee", fields: [createdByEmployeeId], references: [id])
+  createdFrom         String?         @map("created_from")
+  meta                Json?
+  tradingAccountId    Int?            @map("trading_account_id")
+  tradingAccount      TradingAccount? @relation(fields: [tradingAccountId], references: [id])
+  balanceBefore       Decimal         @default(0) @map("balance_before") @db.Decimal(12, 2)
+  createdAt           DateTime        @default(now()) @map("created_at") @db.Timestamptz(3)
+  actions             Json?
+  updatedAt           DateTime        @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([customerId])
+  @@index([brokerEmployeeId])
+  @@index([employeeId])
+  @@index([createdByEmployeeId])
+  @@index([tradingAccountId])
+  @@map("transactions")
+}
+
+model CustomerDocument {
+  id           Int      @id @default(autoincrement())
+  customerId   Int?     @map("customer_id")
+  customer     Trader?  @relation(fields: [customerId], references: [id])
+  name         String?
+  fileFileName String?  @map("file_file_name")
+  object       String?
+  url          String?
+  status       String?
+  validation   Boolean  @default(false)
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([customerId])
+  @@map("customer_documents")
+}
+
+model AssetGroup {
+  id        Int      @id
+  name      String
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+  assets    Asset[]
+
+  @@map("asset_groups")
+}
+
+model Asset {
+  id            Int         @id @default(autoincrement())
+  icon          Json?
+  name          String
+  description   String?
+  groupId       Int?        @map("group_id")
+  group         AssetGroup? @relation(fields: [groupId], references: [id])
+  payout        Decimal     @default(0) @db.Decimal(12, 2)
+  leverage      Decimal     @default(0) @db.Decimal(12, 2)
+  size          Decimal     @default(0) @db.Decimal(12, 2)
+  unit          String?
+  swapBuy       Decimal     @default(0) @map("swap_buy") @db.Decimal(12, 2)
+  swapSell      Decimal     @default(0) @map("swap_sell") @db.Decimal(12, 2)
+  minimumChange Decimal     @default(0) @map("minimum_change") @db.Decimal(12, 6)
+  spread        Decimal     @default(0) @db.Decimal(12, 6)
+  commission    Decimal     @default(0) @db.Decimal(12, 2)
+  expiration    DateTime?   @db.Timestamptz(3)
+  custom        Boolean     @default(false)
+  tradingHours  Json?       @map("trading_hours")
+  createdAt     DateTime    @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime    @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([groupId])
+  @@map("assets")
+}
+
+model Communication {
+  id          Int       @id @default(autoincrement())
+  type        String?
+  title       String?
+  description String?
+  employeeId  Int?      @map("employee_id")
+  employee    Employee? @relation(fields: [employeeId], references: [id])
+  customerId  Int?      @map("customer_id")
+  customer    Trader?   @relation(fields: [customerId], references: [id])
+  campaignId  Int?      @map("campaign_id")
+  campaign    Campaign? @relation(fields: [campaignId], references: [id])
+  actions     Json?
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt   DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([employeeId])
+  @@index([customerId])
+  @@index([campaignId])
+  @@map("communications")
+}

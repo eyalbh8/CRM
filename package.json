@@ -10,6 +10,8 @@
     "client:dev": "npm run dev --workspace apps/client",
     "client:build": "npm run build --workspace apps/client",
     "server:dev": "npm run dev --workspace apps/server",
-    "server:build": "npm run build --workspace apps/server"
+    "server:build": "npm run build --workspace apps/server",
+    "seed:employees": "npm run seed:employees --workspace apps/server",
+    "seed:desks": "npm run seed:desks --workspace apps/server"
   }
 }

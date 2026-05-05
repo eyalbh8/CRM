@@ -1,0 +1,509 @@
+{
+    "items": [
+        {
+            "id": 52,
+            "name": "Affilate 79",
+            "cost": "0$",
+            "calculation_type": "CPA",
+            "customer_count": 2,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": null,
+            "created_at": "2026-04-20 15:30:20"
+        },
+        {
+            "id": 51,
+            "name": "Affiliate 78",
+            "cost": "0$",
+            "calculation_type": "CPA",
+            "customer_count": 1,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": {
+                "id": 4,
+                "fname": "Admin",
+                "lname": "Ellio"
+            },
+            "created_at": "2026-03-10 17:11:57"
+        },
+        {
+            "id": 50,
+            "name": "Affiliate77",
+            "cost": "0$",
+            "calculation_type": "CPA",
+            "customer_count": 0,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": {
+                "id": 4,
+                "fname": "Admin",
+                "lname": "Ellio"
+            },
+            "created_at": "2026-03-04 16:51:02"
+        },
+        {
+            "id": 49,
+            "name": "Affiliate 76",
+            "cost": "0$",
+            "calculation_type": "CPA",
+            "customer_count": 0,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": {
+                "id": 4,
+                "fname": "Admin",
+                "lname": "Ellio"
+            },
+            "created_at": "2026-03-04 16:28:04"
+        },
+        {
+            "id": 48,
+            "name": "Affiliate 75",
+            "cost": "0$",
+            "calculation_type": "CPA",
+            "customer_count": 0,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": {
+                "id": 4,
+                "fname": "Admin",
+                "lname": "Ellio"
+            },
+            "created_at": "2026-02-03 14:59:07"
+        },
+        {
+            "id": 47,
+            "name": "Custom",
+            "cost": "0$",
+            "calculation_type": "CPL",
+            "customer_count": 0,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": null,
+            "created_at": "2026-01-28 13:31:27"
+        },
+        {
+            "id": 46,
+            "name": "Affiliate 74",
+            "cost": "0$",
+            "calculation_type": "CPA",
+            "customer_count": 0,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": {
+                "id": 4,
+                "fname": "Admin",
+                "lname": "Ellio"
+            },
+            "created_at": "2026-01-22 15:44:43"
+        },
+        {
+            "id": 45,
+            "name": "Affiliate 73",
+            "cost": "0$",
+            "calculation_type": "CPA",
+            "customer_count": 0,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": {
+                "id": 4,
+                "fname": "Admin",
+                "lname": "Ellio"
+            },
+            "created_at": "2026-01-21 19:38:46"
+        },
+        {
+            "id": 44,
+            "name": "Affiliate 72",
+            "cost": "0$",
+            "calculation_type": "CPA",
+            "customer_count": 0,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": {
+                "id": 4,
+                "fname": "Admin",
+                "lname": "Ellio"
+            },
+            "created_at": "2026-01-21 17:42:56"
+        },
+        {
+            "id": 43,
+            "name": "Affiliate71",
+            "cost": "0$",
+            "calculation_type": "CPA",
+            "customer_count": 0,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": {
+                "id": 4,
+                "fname": "Admin",
+                "lname": "Ellio"
+            },
+            "created_at": "2026-01-21 16:10:35"
+        },
+        {
+            "id": 42,
+            "name": "Affiliate 70",
+            "cost": "0$",
+            "calculation_type": "CPA",
+            "customer_count": 0,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": {
+                "id": 4,
+                "fname": "Admin",
+                "lname": "Ellio"
+            },
+            "created_at": "2026-01-21 16:05:37"
+        },
+        {
+            "id": 41,
+            "name": "Affiliate 69",
+            "cost": "0$",
+            "calculation_type": "CPA",
+            "customer_count": 0,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": {
+                "id": 4,
+                "fname": "Admin",
+                "lname": "Ellio"
+            },
+            "created_at": "2026-01-21 15:49:06"
+        },
+        {
+            "id": 40,
+            "name": "Affiliate 68",
+            "cost": "0$",
+            "calculation_type": "CPA",
+            "customer_count": 0,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": {
+                "id": 4,
+                "fname": "Admin",
+                "lname": "Ellio"
+            },
+            "created_at": "2026-01-21 13:57:15"
+        },
+        {
+            "id": 39,
+            "name": "Affiliate 66",
+            "cost": "0$",
+            "calculation_type": "CPA",
+            "customer_count": 0,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": {
+                "id": 4,
+                "fname": "Admin",
+                "lname": "Ellio"
+            },
+            "created_at": "2026-01-20 17:38:22"
+        },
+        {
+            "id": 38,
+            "name": "Affiliate 65",
+            "cost": "0$",
+            "calculation_type": "CPA",
+            "customer_count": 0,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": {
+                "id": 4,
+                "fname": "Admin",
+                "lname": "Ellio"
+            },
+            "created_at": "2026-01-20 17:28:21"
+        },
+        {
+            "id": 37,
+            "name": "Affiliate 67",
+            "cost": "0$",
+            "calculation_type": "CPA",
+            "customer_count": 0,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": {
+                "id": 4,
+                "fname": "Admin",
+                "lname": "Ellio"
+            },
+            "created_at": "2026-01-19 17:24:40"
+        },
+        {
+            "id": 36,
+            "name": "Affiliate 64",
+            "cost": "0$",
+            "calculation_type": "CPA",
+            "customer_count": 0,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": {
+                "id": 4,
+                "fname": "Admin",
+                "lname": "Ellio"
+            },
+            "created_at": "2025-12-10 14:11:26"
+        },
+        {
+            "id": 35,
+            "name": "Affiliate 63",
+            "cost": "0$",
+            "calculation_type": "CPA",
+            "customer_count": 0,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": {
+                "id": 4,
+                "fname": "Admin",
+                "lname": "Ellio"
+            },
+            "created_at": "2025-11-17 15:53:31"
+        },
+        {
+            "id": 34,
+            "name": "Affiliate 59",
+            "cost": "0$",
+            "calculation_type": "CPA",
+            "customer_count": 0,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": {
+                "id": 4,
+                "fname": "Admin",
+                "lname": "Ellio"
+            },
+            "created_at": "2025-10-20 10:42:39"
+        },
+        {
+            "id": 33,
+            "name": "Affiliate 58",
+            "cost": "0$",
+            "calculation_type": "CPA",
+            "customer_count": 0,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": {
+                "id": 4,
+                "fname": "Admin",
+                "lname": "Ellio"
+            },
+            "created_at": "2025-09-12 12:21:04"
+        },
+        {
+            "id": 32,
+            "name": "Affiliate 56",
+            "cost": "0$",
+            "calculation_type": "CPA",
+            "customer_count": 0,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": {
+                "id": 4,
+                "fname": "Admin",
+                "lname": "Ellio"
+            },
+            "created_at": "2025-08-27 16:01:35"
+        },
+        {
+            "id": 31,
+            "name": "Affiliate 55",
+            "cost": "0$",
+            "calculation_type": "CPA",
+            "customer_count": 0,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": {
+                "id": 4,
+                "fname": "Admin",
+                "lname": "Ellio"
+            },
+            "created_at": "2025-08-21 12:05:48"
+        },
+        {
+            "id": 30,
+            "name": "Affiliate 54",
+            "cost": "0$",
+            "calculation_type": "CPA",
+            "customer_count": 0,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": {
+                "id": 4,
+                "fname": "Admin",
+                "lname": "Ellio"
+            },
+            "created_at": "2025-08-15 10:10:49"
+        },
+        {
+            "id": 29,
+            "name": "Affiliate 53",
+            "cost": "0$",
+            "calculation_type": "CPA",
+            "customer_count": 0,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": {
+                "id": 4,
+                "fname": "Admin",
+                "lname": "Ellio"
+            },
+            "created_at": "2025-08-14 11:57:59"
+        },
+        {
+            "id": 28,
+            "name": "Affiliate 52",
+            "cost": "0$",
+            "calculation_type": "CPA",
+            "customer_count": 0,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": {
+                "id": 4,
+                "fname": "Admin",
+                "lname": "Ellio"
+            },
+            "created_at": "2025-08-14 10:18:43"
+        },
+        {
+            "id": 27,
+            "name": "Affiliate 51",
+            "cost": "0$",
+            "calculation_type": "CPA",
+            "customer_count": 0,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": {
+                "id": 4,
+                "fname": "Admin",
+                "lname": "Ellio"
+            },
+            "created_at": "2025-08-13 12:42:37"
+        },
+        {
+            "id": 26,
+            "name": "Affiliate 50",
+            "cost": "0$",
+            "calculation_type": "CPA",
+            "customer_count": 0,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": {
+                "id": 4,
+                "fname": "Admin",
+                "lname": "Ellio"
+            },
+            "created_at": "2025-08-13 12:35:21"
+        },
+        {
+            "id": 25,
+            "name": "Affiliate 44",
+            "cost": "0$",
+            "calculation_type": "CPA",
+            "customer_count": 0,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": {
+                "id": 4,
+                "fname": "Admin",
+                "lname": "Ellio"
+            },
+            "created_at": "2025-07-29 19:03:51"
+        },
+        {
+            "id": 24,
+            "name": "Affiliate 34",
+            "cost": "0$",
+            "calculation_type": "CPA",
+            "customer_count": 0,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": {
+                "id": 4,
+                "fname": "Admin",
+                "lname": "Ellio"
+            },
+            "created_at": "2025-07-03 14:36:00"
+        },
+        {
+            "id": 23,
+            "name": "Affiliate 36",
+            "cost": "0$",
+            "calculation_type": "CPA",
+            "customer_count": 0,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": {
+                "id": 4,
+                "fname": "Admin",
+                "lname": "Ellio"
+            },
+            "created_at": "2025-07-02 16:00:44"
+        },
+        {
+            "id": 22,
+            "name": "Affiliate 33",
+            "cost": "0$",
+            "calculation_type": "CPA",
+            "customer_count": 0,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": {
+                "id": 4,
+                "fname": "Admin",
+                "lname": "Ellio"
+            },
+            "created_at": "2025-06-29 12:27:57"
+        },
+        {
+            "id": 21,
+            "name": "Aff 20",
+            "cost": "0$",
+            "calculation_type": "CPL",
+            "customer_count": 1,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": null,
+            "created_at": "2025-06-24 17:44:30"
+        },
+        {
+            "id": 20,
+            "name": "Aff 19",
+            "cost": "0$",
+            "calculation_type": "CPL",
+            "customer_count": 0,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": null,
+            "created_at": "2025-06-24 17:36:35"
+        },
+        {
+            "id": 19,
+            "name": "Aff 18",
+            "cost": "0$",
+            "calculation_type": "CPA",
+            "customer_count": 0,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": null,
+            "created_at": "2025-06-19 13:58:05"
+        },
+        {
+            "id": 18,
+            "name": "Affiliate 17",
+            "cost": "0$",
+            "calculation_type": "CPA",
+            "customer_count": 0,
+            "ftd_count": 0,
+            "redeposit_count": 0,
+            "creator": {
+                "id": 4,
+                "fname": "Admin",
+                "lname": "Ellio"
+            },
+            "created_at": "2025-06-08 12:44:45"
+        }
+    ]
+}

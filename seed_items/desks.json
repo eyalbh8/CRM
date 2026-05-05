@@ -1,0 +1,16 @@
+{
+    "items": [
+        {
+            "id": 51,
+            "desk_name": "Test",
+            "active": "1",
+            "chat_enabled": true,
+            "min_deposit": "200",
+            "max_deposit": "0",
+            "customers_count": 6,
+            "link_trade_platform": "https:\/\/portal.royalwelt.com",
+            "link_mt_account": "",
+            "created_at": "2026-05-05 11:58:57"
+        }
+    ]
+}

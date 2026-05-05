@@ -1,0 +1,478 @@
+{
+    "items": [
+        {
+            "id": 18874,
+            "mt5_login": [],
+            "promo_code": "None",
+            "fname": {
+                "name": "test test",
+                "is_online": false,
+                "last_time_online": "2026-05-05 13:20:31"
+            },
+            "self_status": {
+                "value": "Test",
+                "color": null
+            },
+            "email": "dee@mail.com",
+            "phone": {
+                "phone": {},
+                "phone_formatted": "+4915123333333",
+                "is_phone_hide": true,
+                "whatsAppLink": "https:\/\/api.whatsapp.com\/send\/?phone=4915123333333",
+                "is_phone_valid": true,
+                "is_number_valid": true,
+                "voice_spin_enabled": true
+            },
+            "campaign": {
+                "id": 4,
+                "name": "Affiliate 4"
+            },
+            "finance_employee": null,
+            "desk": {
+                "id": 51,
+                "name": "Test"
+            },
+            "country": "Germany",
+            "city": "",
+            "trading_server": "Web Trading Server",
+            "balance": "0$",
+            "currency": "USD",
+            "total_deposits": "0$",
+            "total_withdrawals": "0$",
+            "total_bonuses": "0$",
+            "validation_status": "None",
+            "retention_status": {
+                "value": null,
+                "color": null
+            },
+            "potential_status": {
+                "value": null,
+                "color": null
+            },
+            "forced_strategy": "",
+            "active": true,
+            "active_trading": false,
+            "active_deposit": false,
+            "last_login": "2026-05-05 13:03:53",
+            "last_communication": null,
+            "last_reminder_start_at": null,
+            "note": {
+                "value": null,
+                "blurred": true
+            },
+            "memo": {
+                "value": null,
+                "blurred": true
+            },
+            "last_communication_date": null,
+            "import_a_aid": "TelorinaGrid",
+            "import_a_bid": "",
+            "import_a_cid": "",
+            "created_at": "2026-04-30 10:53:00",
+            "ftd_date": null,
+            "last_change_broker_date": "2026-05-05 11:57:58",
+            "last_change_desk_date": "2026-05-05 11:59:20",
+            "last_ip": "138.249.11.88",
+            "last_open_date_trade": null,
+            "re_deposit_date": null,
+            "resident": "",
+            "mark_ftd_employee": null,
+            "registration_ip": "138.249.11.88"
+        },
+        {
+            "id": 18201,
+            "mt5_login": [],
+            "promo_code": "None",
+            "fname": {
+                "name": "Marianne Gruber",
+                "is_online": false,
+                "last_time_online": "2026-04-20 17:54:56"
+            },
+            "self_status": {
+                "value": "Test",
+                "color": null
+            },
+            "email": "marianne.gruber1949@gmail.com",
+            "phone": {
+                "phone": {},
+                "phone_formatted": "+436767397793",
+                "is_phone_hide": true,
+                "whatsAppLink": "https:\/\/api.whatsapp.com\/send\/?phone=436767397793",
+                "is_phone_valid": true,
+                "is_number_valid": true,
+                "voice_spin_enabled": true
+            },
+            "campaign": {
+                "id": 52,
+                "name": "Affilate 79"
+            },
+            "finance_employee": null,
+            "desk": {
+                "id": 51,
+                "name": "Test"
+            },
+            "country": "Austria",
+            "city": "",
+            "trading_server": "Web Trading Server",
+            "balance": "0$",
+            "currency": "USD",
+            "total_deposits": "0$",
+            "total_withdrawals": "0$",
+            "total_bonuses": "0$",
+            "validation_status": "None",
+            "retention_status": {
+                "value": null,
+                "color": null
+            },
+            "potential_status": {
+                "value": null,
+                "color": null
+            },
+            "forced_strategy": "",
+            "active": true,
+            "active_trading": false,
+            "active_deposit": false,
+            "last_login": "2026-04-20 17:37:46",
+            "last_communication": null,
+            "last_reminder_start_at": null,
+            "note": {
+                "value": null,
+                "blurred": true
+            },
+            "memo": {
+                "value": null,
+                "blurred": true
+            },
+            "last_communication_date": null,
+            "import_a_aid": "Zuckunfd Truehand",
+            "import_a_bid": "",
+            "import_a_cid": "1",
+            "created_at": "2026-04-20 17:37:35",
+            "ftd_date": null,
+            "last_change_broker_date": "2026-05-05 11:57:58",
+            "last_change_desk_date": "2026-05-05 11:59:20",
+            "last_ip": "2001:4bc9:b057:54b0:aeea:99f3:9264:c740",
+            "last_open_date_trade": null,
+            "re_deposit_date": null,
+            "resident": "",
+            "mark_ftd_employee": null,
+            "registration_ip": "46.125.137.214"
+        },
+        {
+            "id": 18200,
+            "mt5_login": [],
+            "promo_code": "None",
+            "fname": {
+                "name": "Vince test",
+                "is_online": false,
+                "last_time_online": null
+            },
+            "self_status": {
+                "value": "Test",
+                "color": null
+            },
+            "email": "test.uebert@gmail.com",
+            "phone": {
+                "phone": {},
+                "phone_formatted": "+4936228442",
+                "is_phone_hide": true,
+                "whatsAppLink": "https:\/\/api.whatsapp.com\/send\/?phone=4936228442",
+                "is_phone_valid": true,
+                "is_number_valid": true,
+                "voice_spin_enabled": true
+            },
+            "campaign": {
+                "id": 52,
+                "name": "Affilate 79"
+            },
+            "finance_employee": null,
+            "desk": {
+                "id": 51,
+                "name": "Test"
+            },
+            "country": "Germany",
+            "city": "",
+            "trading_server": "Web Trading Server",
+            "balance": "0$",
+            "currency": "USD",
+            "total_deposits": "0$",
+            "total_withdrawals": "0$",
+            "total_bonuses": "0$",
+            "validation_status": "None",
+            "retention_status": {
+                "value": null,
+                "color": null
+            },
+            "potential_status": {
+                "value": null,
+                "color": null
+            },
+            "forced_strategy": "",
+            "active": true,
+            "active_trading": false,
+            "active_deposit": false,
+            "last_login": null,
+            "last_communication": null,
+            "last_reminder_start_at": null,
+            "note": {
+                "value": null,
+                "blurred": true
+            },
+            "memo": {
+                "value": null,
+                "blurred": true
+            },
+            "last_communication_date": null,
+            "import_a_aid": "test-funnel",
+            "import_a_bid": "",
+            "import_a_cid": "",
+            "created_at": "2026-04-20 17:34:18",
+            "ftd_date": null,
+            "last_change_broker_date": "2026-05-05 11:57:58",
+            "last_change_desk_date": "2026-05-05 11:59:20",
+            "last_ip": null,
+            "last_open_date_trade": null,
+            "re_deposit_date": null,
+            "resident": "",
+            "mark_ftd_employee": null,
+            "registration_ip": "189.153.0.138"
+        },
+        {
+            "id": 16276,
+            "mt5_login": [],
+            "promo_code": "None",
+            "fname": {
+                "name": "Ernest test",
+                "is_online": false,
+                "last_time_online": null
+            },
+            "self_status": {
+                "value": "Test",
+                "color": null
+            },
+            "email": "test.millie.kling@yahoo.com",
+            "phone": {
+                "phone": {},
+                "phone_formatted": "+4930256281",
+                "is_phone_hide": true,
+                "whatsAppLink": "https:\/\/api.whatsapp.com\/send\/?phone=4930256281",
+                "is_phone_valid": true,
+                "is_number_valid": true,
+                "voice_spin_enabled": true
+            },
+            "campaign": {
+                "id": 21,
+                "name": "Aff 20"
+            },
+            "finance_employee": null,
+            "desk": {
+                "id": 51,
+                "name": "Test"
+            },
+            "country": "Germany",
+            "city": "",
+            "trading_server": "Web Trading Server",
+            "balance": "0$",
+            "currency": "USD",
+            "total_deposits": "0$",
+            "total_withdrawals": "0$",
+            "total_bonuses": "0$",
+            "validation_status": "None",
+            "retention_status": {
+                "value": null,
+                "color": null
+            },
+            "potential_status": {
+                "value": null,
+                "color": null
+            },
+            "forced_strategy": "",
+            "active": true,
+            "active_trading": false,
+            "active_deposit": false,
+            "last_login": null,
+            "last_communication": null,
+            "last_reminder_start_at": null,
+            "note": {
+                "value": null,
+                "blurred": true
+            },
+            "memo": {
+                "value": null,
+                "blurred": true
+            },
+            "last_communication_date": null,
+            "import_a_aid": "test-funnel",
+            "import_a_bid": "",
+            "import_a_cid": "",
+            "created_at": "2026-03-17 16:26:47",
+            "ftd_date": null,
+            "last_change_broker_date": "2026-05-05 11:57:58",
+            "last_change_desk_date": "2026-05-05 11:59:20",
+            "last_ip": null,
+            "last_open_date_trade": null,
+            "re_deposit_date": null,
+            "resident": "",
+            "mark_ftd_employee": null,
+            "registration_ip": "133.203.78.187"
+        },
+        {
+            "id": 15857,
+            "mt5_login": [],
+            "promo_code": "None",
+            "fname": {
+                "name": "Test Tester",
+                "is_online": false,
+                "last_time_online": "2026-04-03 12:38:49"
+            },
+            "self_status": {
+                "value": "Test",
+                "color": null
+            },
+            "email": "testlead289834341@mailinator.com",
+            "phone": {
+                "phone": {},
+                "phone_formatted": "+4915208961760",
+                "is_phone_hide": true,
+                "whatsAppLink": "https:\/\/api.whatsapp.com\/send\/?phone=4915208961760",
+                "is_phone_valid": true,
+                "is_number_valid": true,
+                "voice_spin_enabled": true
+            },
+            "campaign": {
+                "id": 12,
+                "name": "Affiliate 10"
+            },
+            "finance_employee": null,
+            "desk": {
+                "id": 51,
+                "name": "Test"
+            },
+            "country": "Germany",
+            "city": "",
+            "trading_server": "Web Trading Server",
+            "balance": "0$",
+            "currency": "USD",
+            "total_deposits": "0$",
+            "total_withdrawals": "0$",
+            "total_bonuses": "0$",
+            "validation_status": "None",
+            "retention_status": {
+                "value": null,
+                "color": null
+            },
+            "potential_status": {
+                "value": null,
+                "color": null
+            },
+            "forced_strategy": "",
+            "active": true,
+            "active_trading": false,
+            "active_deposit": false,
+            "last_login": null,
+            "last_communication": null,
+            "last_reminder_start_at": null,
+            "note": {
+                "value": null,
+                "blurred": true
+            },
+            "memo": {
+                "value": null,
+                "blurred": true
+            },
+            "last_communication_date": null,
+            "import_a_aid": "test",
+            "import_a_bid": "13946",
+            "import_a_cid": "",
+            "created_at": "2026-03-11 13:58:36",
+            "ftd_date": null,
+            "last_change_broker_date": "2026-05-05 11:57:58",
+            "last_change_desk_date": "2026-05-05 11:59:21",
+            "last_ip": null,
+            "last_open_date_trade": null,
+            "re_deposit_date": null,
+            "resident": "",
+            "mark_ftd_employee": null,
+            "registration_ip": "2a02:8071:7c40:a5e0:5cdc:c06a:9e2a:ed75"
+        },
+        {
+            "id": 15768,
+            "mt5_login": [],
+            "promo_code": "None",
+            "fname": {
+                "name": "Raleigh Schewe",
+                "is_online": false,
+                "last_time_online": null
+            },
+            "self_status": {
+                "value": "Test",
+                "color": null
+            },
+            "email": "raleigh.schewe7312_test@gmail.com",
+            "phone": {
+                "phone": {},
+                "phone_formatted": "+4915123908367",
+                "is_phone_hide": true,
+                "whatsAppLink": "https:\/\/api.whatsapp.com\/send\/?phone=4915123908367",
+                "is_phone_valid": true,
+                "is_number_valid": true,
+                "voice_spin_enabled": true
+            },
+            "campaign": {
+                "id": 51,
+                "name": "Affiliate 78"
+            },
+            "finance_employee": null,
+            "desk": {
+                "id": 51,
+                "name": "Test"
+            },
+            "country": "Germany",
+            "city": "",
+            "trading_server": "Web Trading Server",
+            "balance": "0$",
+            "currency": "USD",
+            "total_deposits": "0$",
+            "total_withdrawals": "0$",
+            "total_bonuses": "0$",
+            "validation_status": "None",
+            "retention_status": {
+                "value": null,
+                "color": null
+            },
+            "potential_status": {
+                "value": null,
+                "color": null
+            },
+            "forced_strategy": "",
+            "active": true,
+            "active_trading": false,
+            "active_deposit": false,
+            "last_login": null,
+            "last_communication": null,
+            "last_reminder_start_at": null,
+            "note": {
+                "value": null,
+                "blurred": true
+            },
+            "memo": {
+                "value": null,
+                "blurred": true
+            },
+            "last_communication_date": null,
+            "import_a_aid": "so",
+            "import_a_bid": "",
+            "import_a_cid": "",
+            "created_at": "2026-03-10 17:29:51",
+            "ftd_date": null,
+            "last_change_broker_date": "2026-05-05 11:57:58",
+            "last_change_desk_date": "2026-05-05 11:59:21",
+            "last_ip": null,
+            "last_open_date_trade": null,
+            "re_deposit_date": null,
+            "resident": "",
+            "mark_ftd_employee": null,
+            "registration_ip": "194.50.225.237"
+        }
+    ]
+}
