@@ -99,9 +99,9 @@ export function TransactionsPage() {
     }
 
     const payload = (await response.json()) as TransactionsResponse;
-    setColumns(payload.columns);
-    setFilters(payload.filters);
-    setTransactions(payload.data);
+    setColumns(payload.columns ?? []);
+    setFilters(payload.filters ?? []);
+    setTransactions(payload.data ?? []);
   }
 
   useEffect(() => {
@@ -137,10 +137,15 @@ export function TransactionsPage() {
     [columns],
   );
 
+  const effectiveFilters = useMemo(
+    () => (filters.length > 0 ? filters : buildTransactionFilters(transactions)),
+    [filters, transactions],
+  );
+
   const filteredTransactions = useMemo(
     () =>
       transactions.filter((transaction) =>
-        filters.every((filter) => {
+        effectiveFilters.every((filter) => {
           const selectedValue = activeFilters[filter.key];
 
           if (!selectedValue) {
@@ -150,7 +155,7 @@ export function TransactionsPage() {
           return String(transaction[filter.key] ?? "") === selectedValue;
         }),
       ),
-    [activeFilters, filters, transactions],
+    [activeFilters, effectiveFilters, transactions],
   );
 
   const selectedTradingAccount = formOptions.tradingAccounts.find(
@@ -253,9 +258,9 @@ export function TransactionsPage() {
           </button>
         </div>
 
-        {filters.length > 0 ? (
+        {effectiveFilters.length > 0 ? (
           <div className="table-filters" aria-label="Transaction filters">
-            {filters.map((filter) => (
+            {effectiveFilters.map((filter) => (
               <label className="table-filter-field" key={filter.key}>
                 <span>{filter.label}</span>
                 <select
@@ -502,6 +507,50 @@ function toSelectOptions(options: ApiOption[]) {
     label: option.label,
     value: String(option.value),
   }));
+}
+
+function buildTransactionFilters(transactions: TransactionRow[]): TransactionFilter[] {
+  return [
+    buildFilterFromRows("customer", "Trader", transactions),
+    buildFilterFromRows("broker_employee", "Current Broker", transactions),
+    buildFilterFromRows("employee", "Assigned Broker", transactions),
+    buildFilterFromRows("created_by_employee", "Created By Employee", transactions),
+  ].filter((filter): filter is TransactionFilter => filter !== null);
+}
+
+function buildFilterFromRows(
+  key: string,
+  label: string,
+  transactions: TransactionRow[],
+): TransactionFilter | null {
+  const values = new Map<string, ApiOption>();
+
+  for (const transaction of transactions) {
+    const rawValue = transaction[key];
+
+    if (rawValue === null || rawValue === undefined || rawValue === "") {
+      continue;
+    }
+
+    const value = String(rawValue);
+    values.set(value, {
+      label: value,
+      value,
+    });
+  }
+
+  if (values.size === 0) {
+    return null;
+  }
+
+  return {
+    key,
+    label,
+    type: "select",
+    values: Array.from(values.values()).sort((left, right) =>
+      left.label.localeCompare(right.label),
+    ),
+  };
 }
 
 function formatCellValue(value: unknown) {
