@@ -1,0 +1,22 @@
+{
+  "name": "proline-client",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "preview": "vite preview",
+    "build": "tsc && vite build"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react-swc": "^4.2.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "vite": "^5.4.11"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.9",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^5.8.3"
+  }
+}

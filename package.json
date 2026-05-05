@@ -1,0 +1,15 @@
+{
+  "name": "proline",
+  "version": "0.0.1",
+  "private": true,
+  "workspaces": [
+    "apps/client",
+    "apps/server"
+  ],
+  "scripts": {
+    "client:dev": "npm run dev --workspace apps/client",
+    "client:build": "npm run build --workspace apps/client",
+    "server:dev": "npm run dev --workspace apps/server",
+    "server:build": "npm run build --workspace apps/server"
+  }
+}
