@@ -25,6 +25,17 @@ export type CreateTraderInput = {
   comment?: unknown;
 };
 
+export type TraderCreateFormOption = {
+  label: string;
+  value: number;
+};
+
+export type TraderCreateFormResponse = {
+  campaigns: TraderCreateFormOption[];
+  desks: TraderCreateFormOption[];
+  employees: TraderCreateFormOption[];
+};
+
 type TraderWithRelations = Prisma.TraderGetPayload<{
   include: {
     campaign: true;
@@ -50,6 +61,53 @@ export class TradersService {
     return {
       columns: TRADER_TABLE_COLUMNS,
       data: traders.map((trader) => this.toTableRow(trader)),
+    };
+  }
+
+  async getCreateFormOptions(): Promise<TraderCreateFormResponse> {
+    const [campaigns, desks, employees] = await Promise.all([
+      this.prisma.campaign.findMany({
+        orderBy: {
+          name: "asc",
+        },
+        select: {
+          id: true,
+          name: true,
+        },
+      }),
+      this.prisma.desk.findMany({
+        orderBy: {
+          deskName: "asc",
+        },
+        select: {
+          deskName: true,
+          id: true,
+        },
+      }),
+      this.prisma.employee.findMany({
+        orderBy: {
+          fname: "asc",
+        },
+        select: {
+          fname: true,
+          id: true,
+        },
+      }),
+    ]);
+
+    return {
+      campaigns: campaigns.map((campaign) => ({
+        label: campaign.name,
+        value: campaign.id,
+      })),
+      desks: desks.map((desk) => ({
+        label: desk.deskName,
+        value: desk.id,
+      })),
+      employees: employees.map((employee) => ({
+        label: employee.fname,
+        value: employee.id,
+      })),
     };
   }
 

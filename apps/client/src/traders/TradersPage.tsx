@@ -37,8 +37,15 @@ type TraderFormState = {
   comment: string;
 };
 
-type ResourceResponse = {
-  data: Record<string, unknown>[];
+type TraderCreateFormResponse = {
+  campaigns: ApiOption[];
+  desks: ApiOption[];
+  employees: ApiOption[];
+};
+
+type ApiOption = {
+  label: string;
+  value: number;
 };
 
 const apiUrl = import.meta.env.VITE_API_URL ?? "http://localhost:3001";
@@ -145,6 +152,7 @@ export function TradersPage() {
     employees: [] as Option[],
   });
   const [formError, setFormError] = useState<string | null>(null);
+  const [isLoadingCreateForm, setIsLoadingCreateForm] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   async function loadTraders(signal?: AbortSignal) {
@@ -169,11 +177,7 @@ export function TradersPage() {
 
     async function loadInitialData() {
       try {
-        const [, options] = await Promise.all([
-          loadTraders(controller.signal),
-          loadFormOptions(controller.signal),
-        ]);
-        setFormOptions(options);
+        await loadTraders(controller.signal);
       } catch (caughtError) {
         if (caughtError instanceof DOMException && caughtError.name === "AbortError") {
           return;
@@ -204,6 +208,27 @@ export function TradersPage() {
   ) {
     const { name, value } = event.target;
     setFormState((currentState) => ({ ...currentState, [name]: value }));
+  }
+
+  async function handleOpenCreateModal() {
+    setIsLoadingCreateForm(true);
+    setError(null);
+    setFormError(null);
+
+    try {
+      const options = await loadFormOptions();
+      setFormOptions(options);
+      setFormState(initialFormState);
+      setIsCreateOpen(true);
+    } catch (caughtError) {
+      setError(
+        caughtError instanceof Error
+          ? caughtError.message
+          : "Failed to load create trader options",
+      );
+    } finally {
+      setIsLoadingCreateForm(false);
+    }
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -255,10 +280,11 @@ export function TradersPage() {
           </div>
           <button
             className="primary-action-button"
+            disabled={isLoadingCreateForm}
             type="button"
-            onClick={() => setIsCreateOpen(true)}
+            onClick={handleOpenCreateModal}
           >
-            Create New Trader
+            {isLoadingCreateForm ? "Loading Form..." : "Create New Trader"}
           </button>
         </div>
 
@@ -489,32 +515,28 @@ function FormSelect({
 }
 
 async function loadFormOptions(signal?: AbortSignal) {
-  const [desks, campaigns, employees] = await Promise.all([
-    fetchResourceOptions("desks", "desk_name", signal),
-    fetchResourceOptions("campaigns", "name", signal),
-    fetchResourceOptions("employees", "fname", signal),
-  ]);
-
-  return { desks, campaigns, employees };
-}
-
-async function fetchResourceOptions(resource: string, labelKey: string, signal?: AbortSignal) {
-  const response = await fetch(`${apiUrl}/${resource}`, {
+  const response = await fetch(`${apiUrl}/traders/create-form`, {
     signal,
   });
 
   if (!response.ok) {
-    throw new Error(`${resource} options request failed with ${response.status}`);
+    throw new Error(`Create trader form request failed with ${response.status}`);
   }
 
-  const payload = (await response.json()) as ResourceResponse;
+  const payload = (await response.json()) as TraderCreateFormResponse;
 
-  return payload.data
-    .map((row) => ({
-      label: String(row[labelKey] ?? row.id),
-      value: String(row.id ?? ""),
-    }))
-    .filter((option) => option.value.length > 0);
+  return {
+    campaigns: toSelectOptions(payload.campaigns),
+    desks: toSelectOptions(payload.desks),
+    employees: toSelectOptions(payload.employees),
+  };
+}
+
+function toSelectOptions(options: ApiOption[]) {
+  return options.map((option) => ({
+    label: option.label,
+    value: String(option.value),
+  }));
 }
 
 function formatCellValue(value: unknown) {

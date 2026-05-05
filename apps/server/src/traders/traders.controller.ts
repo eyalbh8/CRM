@@ -2,6 +2,7 @@ import { Body, Controller, Get, Post } from "@nestjs/common";
 import {
   TradersService,
   type CreateTraderInput,
+  type TraderCreateFormResponse,
   type TraderRow,
   type TradersTableResponse,
 } from "./traders.service";
@@ -13,6 +14,11 @@ export class TradersController {
   @Get()
   findAll(): Promise<TradersTableResponse> {
     return this.tradersService.findAll();
+  }
+
+  @Get("create-form")
+  getCreateFormOptions(): Promise<TraderCreateFormResponse> {
+    return this.tradersService.getCreateFormOptions();
   }
 
   @Post()
