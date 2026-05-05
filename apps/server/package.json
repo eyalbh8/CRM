@@ -12,14 +12,15 @@
     "compose:down": "docker compose -f docker-compose.yml down",
     "prisma:generate": "prisma generate",
     "prisma:format": "prisma format",
-    "seed": "npm run seed:asset-groups && npm run seed:assets && npm run seed:employees && npm run seed:desks && npm run seed:campaigns && npm run seed:traders && npm run seed:trading-accounts",
+    "seed": "npm run seed:asset-groups && npm run seed:assets && npm run seed:employees && npm run seed:desks && npm run seed:campaigns && npm run seed:traders && npm run seed:trading-accounts && npm run seed:transactions",
     "seed:asset-groups": "node scripts/seed-asset-groups.js",
     "seed:assets": "node scripts/seed-assets.js",
     "seed:employees": "node scripts/seed-employees.js",
     "seed:desks": "node scripts/seed-desks.js",
     "seed:campaigns": "node scripts/seed-campaigns.js",
     "seed:traders": "node scripts/seed-traders.js",
-    "seed:trading-accounts": "node scripts/seed-trading-accounts.js"
+    "seed:trading-accounts": "node scripts/seed-trading-accounts.js",
+    "seed:transactions": "node scripts/seed-transactions.js"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.14",

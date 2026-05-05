@@ -10,6 +10,21 @@ export type TradersTableResponse = {
   data: TraderRow[];
 };
 
+export type CreateTraderInput = {
+  fname?: unknown;
+  lname?: unknown;
+  email?: unknown;
+  password?: unknown;
+  phone?: unknown;
+  country?: unknown;
+  desk_id?: unknown;
+  campaign_id?: unknown;
+  affiliate_id?: unknown;
+  broker_id?: unknown;
+  trading_server?: unknown;
+  comment?: unknown;
+};
+
 type TraderWithRelations = Prisma.TraderGetPayload<{
   include: {
     campaign: true;
@@ -36,6 +51,47 @@ export class TradersService {
       columns: TRADER_TABLE_COLUMNS,
       data: traders.map((trader) => this.toTableRow(trader)),
     };
+  }
+
+  async create(input: CreateTraderInput): Promise<TraderRow> {
+    const firstName = toNullableString(input.fname);
+    const lastName = toNullableString(input.lname);
+    const fullName = [firstName, lastName].filter(Boolean).join(" ").trim() || null;
+    const brokerEmployee = await this.toEmployeeJson(input.broker_id);
+    const financeEmployee = await this.toEmployeeJson(input.affiliate_id);
+    const deskId = await this.toExistingDeskId(input.desk_id);
+    const campaignId = await this.toExistingCampaignId(input.campaign_id);
+
+    const trader = await this.prisma.trader.create({
+      data: {
+        fname: fullName,
+        email: toNullableString(input.email),
+        phone: toNullableString(input.phone),
+        country: toNullableString(input.country),
+        deskId,
+        campaignId,
+        brokerEmployee,
+        financeEmployee,
+        tradingServer: toNullableString(input.trading_server),
+        note: toNullableString(input.comment),
+        active: true,
+        activeDeposit: false,
+        activeTrading: false,
+        balance: "0",
+        currency: "USD",
+        selfStatus: "New",
+        totalBonuses: "0",
+        totalDeposits: "0",
+        totalWithdrawals: "0",
+        validationStatus: "Not Verified",
+      },
+      include: {
+        campaign: true,
+        desk: true,
+      },
+    });
+
+    return this.toTableRow(trader);
   }
 
   private toTableRow(trader: TraderWithRelations): TraderRow {
@@ -88,4 +144,87 @@ export class TradersService {
       registration_ip: trader.registrationIp,
     };
   }
+
+  private async toExistingDeskId(value: unknown) {
+    const deskId = toNullableNumber(value);
+
+    if (!deskId) {
+      return null;
+    }
+
+    const desk = await this.prisma.desk.findUnique({
+      where: {
+        id: deskId,
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    return desk?.id ?? null;
+  }
+
+  private async toExistingCampaignId(value: unknown) {
+    const campaignId = toNullableNumber(value);
+
+    if (!campaignId) {
+      return null;
+    }
+
+    const campaign = await this.prisma.campaign.findUnique({
+      where: {
+        id: campaignId,
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    return campaign?.id ?? null;
+  }
+
+  private async toEmployeeJson(value: unknown): Promise<Prisma.InputJsonValue | undefined> {
+    const employeeId = toNullableNumber(value);
+
+    if (!employeeId) {
+      return undefined;
+    }
+
+    const employee = await this.prisma.employee.findUnique({
+      where: {
+        id: employeeId,
+      },
+      select: {
+        id: true,
+        fname: true,
+      },
+    });
+
+    if (!employee) {
+      return undefined;
+    }
+
+    return {
+      id: employee.id,
+      name: employee.fname,
+    };
+  }
+}
+
+function toNullableString(value: unknown) {
+  if (typeof value !== "string") {
+    return null;
+  }
+
+  const trimmedValue = value.trim();
+  return trimmedValue.length > 0 ? trimmedValue : null;
+}
+
+function toNullableNumber(value: unknown) {
+  if (value === null || value === undefined || value === "") {
+    return null;
+  }
+
+  const numberValue = Number(value);
+  return Number.isFinite(numberValue) ? numberValue : null;
 }
