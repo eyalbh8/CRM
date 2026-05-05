@@ -1,6 +1,6 @@
 const { join } = require("node:path");
 const { config } = require("dotenv");
-const { PrismaClient } = require("@prisma/client");
+const { Prisma, PrismaClient } = require("@prisma/client");
 
 config({ path: join(__dirname, "..", ".env") });
 
@@ -94,7 +94,8 @@ const mockTransactions = [
 ];
 
 async function main() {
-  const [tradingAccounts, traders, employees] = await Promise.all([
+  const mockTransactionIds = mockTransactions.map((transaction) => transaction.id);
+  const [tradingAccounts, traders, employees, existingMockTransactions] = await Promise.all([
     prisma.tradingAccount.findMany({
       orderBy: {
         id: "asc",
@@ -127,29 +128,57 @@ async function main() {
         id: true,
       },
     }),
+    prisma.transaction.findMany({
+      where: {
+        id: {
+          in: mockTransactionIds,
+        },
+      },
+      select: {
+        tradingAccountId: true,
+        value: true,
+      },
+    }),
   ]);
 
   if (traders.length === 0) {
     throw new Error("Seed traders before adding mock transactions");
   }
 
+  const accountBalances = new Map(
+    tradingAccounts.map((account) => [account.id, new Prisma.Decimal(account.balance)]),
+  );
+
+  for (const transaction of existingMockTransactions) {
+    if (!transaction.tradingAccountId) {
+      continue;
+    }
+
+    const currentBalance = accountBalances.get(transaction.tradingAccountId);
+
+    if (currentBalance) {
+      accountBalances.set(transaction.tradingAccountId, currentBalance.minus(transaction.value));
+    }
+  }
+
   const transactionSources =
     tradingAccounts.length > 0
       ? tradingAccounts.map((account) => ({
           accountId: account.id,
-          balanceBefore: account.balance.toString(),
           country: account.trader.country,
           traderId: account.traderId,
         }))
       : traders.map((trader) => ({
           accountId: null,
-          balanceBefore: "0",
           country: trader.country,
           traderId: trader.id,
         }));
 
   for (const [index, transaction] of mockTransactions.entries()) {
     const source = transactionSources[index % transactionSources.length];
+    const balanceBefore = source.accountId
+      ? accountBalances.get(source.accountId) ?? new Prisma.Decimal(0)
+      : new Prisma.Decimal(0);
     const brokerEmployeeId = getEmployeeId(employees, index);
     const employeeId = getEmployeeId(employees, index + 1);
     const createdByEmployeeId = getEmployeeId(employees, index + 2);
@@ -171,7 +200,7 @@ async function main() {
         createdFrom: transaction.createdFrom,
         meta: transaction.meta,
         tradingAccountId: source.accountId,
-        balanceBefore: source.balanceBefore,
+        balanceBefore,
         createdAt: toMockDate(index),
         actions: [
           {
@@ -192,7 +221,7 @@ async function main() {
         createdFrom: transaction.createdFrom,
         meta: transaction.meta,
         tradingAccountId: source.accountId,
-        balanceBefore: source.balanceBefore,
+        balanceBefore,
         createdAt: toMockDate(index),
         actions: [
           {
@@ -200,6 +229,21 @@ async function main() {
             action: "view",
           },
         ],
+      },
+    });
+
+    if (source.accountId) {
+      accountBalances.set(source.accountId, balanceBefore.plus(transaction.value));
+    }
+  }
+
+  for (const [accountId, balance] of accountBalances.entries()) {
+    await prisma.tradingAccount.update({
+      where: {
+        id: accountId,
+      },
+      data: {
+        balance,
       },
     });
   }

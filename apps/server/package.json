@@ -14,6 +14,7 @@
     "prisma:format": "prisma format",
     "db:up": "docker compose -f docker-compose.yml up -d postgres",
     "db:migrate": "prisma migrate dev",
+    "db:reset": "prisma migrate reset --force",
     "db:deploy": "prisma migrate deploy",
     "db:setup": "npm run db:up && npm run db:migrate && npm run prisma:generate",
     "seed": "npm run seed:asset-groups && npm run seed:assets && npm run seed:employees && npm run seed:desks && npm run seed:campaigns && npm run seed:traders && npm run seed:trading-accounts && npm run seed:transactions",

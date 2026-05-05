@@ -326,6 +326,38 @@ p {
   color: #526071;
 }
 
+.table-filters {
+  align-items: end;
+  border-bottom: 1px solid #e6edf6;
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(4, minmax(160px, 1fr)) auto;
+  padding: 16px 24px;
+}
+
+.table-filter-field {
+  display: grid;
+  gap: 8px;
+}
+
+.table-filter-field span {
+  color: #172033;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.table-filter-field select {
+  background: #f8fbff;
+  border: 1px solid #dbe3ef;
+  border-radius: 14px;
+  box-sizing: border-box;
+  color: #172033;
+  font: inherit;
+  min-height: 44px;
+  padding: 10px 12px;
+  width: 100%;
+}
+
 .state-message {
   color: #526071;
   font-size: 16px;
@@ -483,7 +515,8 @@ tbody tr:hover {
   font-weight: 800;
 }
 
-.create-trader-form {
+.create-trader-form,
+.create-transaction-form {
   display: grid;
   gap: 16px;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -537,6 +570,11 @@ tbody tr:hover {
   color: #b42318;
 }
 
+.form-message--info {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
 .form-actions {
   display: flex;
   gap: 12px;
@@ -586,7 +624,13 @@ tbody tr:hover {
     grid-template-columns: 1fr;
   }
 
-  .create-trader-form {
+  .table-filters {
+    align-items: stretch;
+    grid-template-columns: 1fr;
+  }
+
+  .create-trader-form,
+  .create-transaction-form {
     grid-template-columns: 1fr;
   }
 }
