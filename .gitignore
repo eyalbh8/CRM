@@ -2,6 +2,8 @@ node_modules
 dist
 .env
 .env.*
+apps/server/.env
 !.env.example
+!**/.env.example
 coverage
 .DS_Store
