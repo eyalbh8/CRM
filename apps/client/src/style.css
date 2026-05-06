@@ -1010,11 +1010,10 @@ tbody tr:hover {
 }
 
 .traders-page__header {
-  align-items: flex-end;
+  align-items: flex-start;
   display: flex;
-  flex-wrap: wrap;
-  gap: 16px 24px;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 4px;
   margin: 0;
   max-width: 100%;
   min-width: 0;
@@ -1023,7 +1022,8 @@ tbody tr:hover {
 .traders-page__title {
   font-size: clamp(28px, 4vw, 40px);
   line-height: 1.1;
-  margin: 0 0 8px;
+  margin: 0 0 6px;
+  text-align: left;
 }
 
 .traders-page__subtitle {
@@ -1032,6 +1032,7 @@ tbody tr:hover {
   line-height: 1.5;
   margin: 0;
   max-width: 52ch;
+  text-align: left;
 }
 
 .traders-page > .dashboard-top-bar {

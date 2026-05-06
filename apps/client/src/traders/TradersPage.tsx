@@ -425,13 +425,10 @@ export function TradersPage() {
       <CrmTopBar />
 
       <section className="traders-page__header">
-        <p className="eyebrow">Traders</p>
-        <div>
-          <h1 className="traders-page__title">All platform traders</h1>
-          <p className="traders-page__subtitle">
-            View trader registrations, ownership, campaign, and desk details.
-          </p>
-        </div>
+        <h1 className="traders-page__title">All platform traders</h1>
+        <p className="traders-page__subtitle">
+          View trader registrations, ownership, campaign, and desk details.
+        </p>
       </section>
 
       <div className="traders-toolbar" aria-label="Traders filters and actions">
