@@ -1,11 +1,6 @@
-import { useEffect, useState } from "react";
+import { CrmTopBar } from "./CrmTopBar";
 import {
   DashboardTableToolbar,
-  formatClock,
-  IconBell,
-  IconCalendar,
-  IconMoon,
-  IconSearch,
   IconSpeech,
   IconTrophy,
   IconUser,
@@ -30,41 +25,9 @@ const zeroTrafficRow = {
 };
 
 export function Dashboard() {
-  const [clock, setClock] = useState(() => formatClock(new Date()));
-
-  useEffect(() => {
-    const id = window.setInterval(() => {
-      setClock(formatClock(new Date()));
-    }, 1000);
-    return () => window.clearInterval(id);
-  }, []);
-
   return (
     <div className="dashboard-page">
-      <header className="dashboard-top-bar">
-        <div className="dashboard-top-bar__search">
-          <IconSearch />
-          <input type="search" placeholder="Search" aria-label="Search" readOnly />
-        </div>
-        <div className="dashboard-top-bar__actions">
-          <span className="dashboard-top-bar__clock" aria-live="polite">
-            {clock}
-          </span>
-          <button type="button" className="dashboard-top-bar__icon-btn" aria-label="Toggle theme">
-            <IconMoon />
-          </button>
-          <button type="button" className="dashboard-top-bar__icon-btn" aria-label="Calendar">
-            <IconCalendar />
-          </button>
-          <button type="button" className="dashboard-top-bar__icon-btn dashboard-top-bar__icon-btn--badge" aria-label="Notifications">
-            <IconBell />
-            <span className="dashboard-top-bar__badge">10</span>
-          </button>
-          <span className="dashboard-top-bar__avatar" aria-hidden>
-            TE
-          </span>
-        </div>
-      </header>
+      <CrmTopBar />
 
       <div className="dashboard-banner" role="status">
         <IconWarning />

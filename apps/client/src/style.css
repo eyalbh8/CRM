@@ -140,6 +140,7 @@ a {
   box-sizing: border-box;
   flex: 1;
   min-width: 0;
+  overflow-x: hidden;
   padding: 32px;
 }
 
@@ -743,7 +744,10 @@ p {
 }
 
 .table-scroll {
+  max-width: 100%;
+  min-width: 0;
   overflow-x: auto;
+  overscroll-behavior-x: contain;
 }
 
 table {
@@ -973,6 +977,549 @@ tbody tr:hover {
   color: #166534;
 }
 
+/* Traders page (reference CRM layout) */
+.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.traders-page {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 0 auto;
+  max-width: 100%;
+  min-width: 0;
+  padding-bottom: 120px;
+  position: relative;
+  width: 100%;
+}
+
+.traders-page__header {
+  align-items: flex-end;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 24px;
+  justify-content: space-between;
+  margin: 0;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.traders-page__title {
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 1.1;
+  margin: 0 0 8px;
+}
+
+.traders-page__subtitle {
+  color: #526071;
+  font-size: 15px;
+  line-height: 1.5;
+  margin: 0;
+  max-width: 52ch;
+}
+
+.traders-page > .dashboard-top-bar {
+  box-sizing: border-box;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.traders-toolbar {
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #dbe3ef;
+  border-radius: 16px;
+  box-shadow: 0 8px 28px rgb(23 32 51 / 6%);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  max-width: 100%;
+  min-width: 0;
+  padding: 14px 16px;
+}
+
+.traders-toolbar__new-link {
+  background: transparent;
+  border: 0;
+  color: #2563eb;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 800;
+  margin-right: 8px;
+  padding: 8px 4px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.traders-toolbar__new-link:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.traders-toolbar__select-wrap {
+  margin: 0;
+}
+
+.traders-toolbar__select {
+  background: #f8fbff;
+  border: 1px solid #dbe3ef;
+  border-radius: 10px;
+  color: #526071;
+  cursor: not-allowed;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  min-height: 38px;
+  padding: 8px 12px;
+}
+
+.traders-toolbar__selection-pill {
+  background: #f1f5f9;
+  border: 1px solid #dbe3ef;
+  border-radius: 999px;
+  color: #475569;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 8px 14px;
+}
+
+.traders-toolbar__btn {
+  background: #f8fbff;
+  border: 1px solid #dbe3ef;
+  border-radius: 10px;
+  color: #172033;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 8px 14px;
+}
+
+.traders-toolbar__btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.traders-toolbar__filters-settings {
+  align-items: center;
+  background: #26b99f;
+  border: 0;
+  border-radius: 10px;
+  box-shadow: 0 4px 14px rgb(38 185 159 / 28%);
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 13px;
+  font-weight: 800;
+  gap: 8px;
+  margin-left: auto;
+  padding: 10px 16px;
+}
+
+.traders-toolbar__filters-settings:hover {
+  filter: brightness(1.06);
+}
+
+.traders-toolbar__filters-settings svg {
+  height: 18px;
+  width: 18px;
+}
+
+.data-browser-table-card {
+  margin-top: 0;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.data-browser-results-bar {
+  align-items: center;
+  background: #26b99f;
+  box-sizing: border-box;
+  color: #ffffff;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  min-height: 48px;
+  padding: 10px 18px;
+  width: 100%;
+}
+
+.data-browser-results-bar__label {
+  align-items: center;
+  display: inline-flex;
+  font-size: 15px;
+  font-weight: 800;
+  gap: 10px;
+  letter-spacing: 0.02em;
+}
+
+.data-browser-results-bar__label svg {
+  flex-shrink: 0;
+  height: 20px;
+  width: 20px;
+}
+
+.data-browser-results-bar__gear {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-flex;
+  height: 36px;
+  justify-content: center;
+  opacity: 0.95;
+  padding: 0;
+  width: 36px;
+}
+
+.data-browser-results-bar__gear:hover {
+  background: rgb(255 255 255 / 15%);
+}
+
+.data-browser-results-bar__gear svg {
+  height: 20px;
+  width: 20px;
+}
+
+.data-browser-pagination-summary {
+  align-items: center;
+  border-bottom: 1px solid #e6edf6;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  justify-content: space-between;
+  max-width: 100%;
+  min-width: 0;
+  padding: 14px 20px;
+}
+
+.data-browser-pagination-summary p {
+  color: #526071;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.data-browser-pagination-nav {
+  align-items: center;
+  display: inline-flex;
+  gap: 6px;
+}
+
+.data-browser-pagination-nav__btn {
+  background: #f8fbff;
+  border: 1px solid #dbe3ef;
+  border-radius: 8px;
+  color: #172033;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1;
+  min-width: 36px;
+  padding: 8px 10px;
+}
+
+.data-browser-pagination-nav__btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.data-browser-pagination-nav__current {
+  background: rgb(38 185 159 / 12%);
+  border: 1px solid #26b99f;
+  border-radius: 8px;
+  color: #0f766e;
+  font-size: 14px;
+  font-weight: 900;
+  min-width: 36px;
+  padding: 8px 12px;
+  text-align: center;
+}
+
+.data-browser-scroll.table-scroll {
+  border-top: 0;
+  isolation: isolate;
+  max-width: 100%;
+}
+
+.data-browser-table thead th {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+}
+
+.data-browser-table__check {
+  text-align: center;
+  width: 44px;
+}
+
+.data-browser-table__th-inner {
+  align-items: baseline;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: flex-start;
+  max-width: 100%;
+}
+
+.data-browser-table__sort-icons {
+  color: #94a3b8;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  opacity: 0.85;
+  user-select: none;
+}
+
+.traders-value-neg {
+  color: #e5697d;
+  font-weight: 700;
+}
+
+.traders-value-neg--emphasis {
+  font-weight: 800;
+}
+
+.traders-bool-yes {
+  color: #38bdf8;
+  font-weight: 700;
+}
+
+.traders-bool-no {
+  color: #e5697d;
+  font-weight: 700;
+}
+
+.traders-money-cell {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.traders-ip-cell {
+  display: inline-block;
+  font-size: 12px;
+  max-width: 220px;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.traders-value-plain-none {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.traders-add-comment-btn {
+  align-items: center;
+  background: #3b82f6;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 13px;
+  font-weight: 800;
+  gap: 8px;
+  min-height: 40px;
+  padding: 8px 16px;
+}
+
+.traders-add-comment-btn:hover {
+  background: #2563eb;
+}
+
+.traders-add-comment-btn__icon {
+  flex-shrink: 0;
+  height: 18px;
+  width: 18px;
+}
+
+.traders-note-card {
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 12px;
+  max-width: 220px;
+  min-width: 140px;
+  overflow: hidden;
+}
+
+.traders-note-card__head {
+  align-items: center;
+  background: #f97316;
+  color: #fff;
+  display: flex;
+  font-weight: 800;
+  gap: 8px;
+  padding: 8px 10px;
+}
+
+.traders-note-card__check {
+  accent-color: #fff;
+  cursor: pointer;
+  height: 16px;
+  margin: 0;
+  width: 16px;
+}
+
+.traders-note-card__body {
+  align-items: flex-start;
+  background: #fff;
+  border: 1px solid #e8edf6;
+  border-top: 0;
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  padding: 8px 10px;
+}
+
+.traders-note-card__preview {
+  color: #334155;
+  flex: 1;
+  font-size: 12px;
+  line-height: 1.35;
+  max-height: 4.05em;
+  overflow: hidden;
+}
+
+.traders-mt5-json {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  max-width: 200px;
+  overflow-wrap: anywhere;
+}
+
+.traders-cell-id {
+  align-items: center;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+}
+
+.traders-cell-id__hash {
+  color: #2563eb;
+  font-weight: 800;
+}
+
+.traders-cell-id__actions {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.traders-icon-btn {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  color: #64748b;
+  cursor: pointer;
+  display: inline-flex;
+  height: 30px;
+  justify-content: center;
+  padding: 0;
+  width: 30px;
+}
+
+.traders-icon-btn:hover {
+  background: #e2e8f0;
+  color: #2563eb;
+}
+
+.traders-icon-btn--quiet:hover {
+  color: #2563eb;
+}
+
+.traders-icon-btn--link {
+  color: #2563eb;
+}
+
+.traders-icon-btn--link:hover {
+  background: rgb(37 99 235 / 10%);
+}
+
+.traders-inline-icon {
+  flex-shrink: 0;
+  height: 17px;
+  width: 17px;
+}
+
+.traders-table-link {
+  font-weight: 700;
+}
+
+.traders-value-danger {
+  color: #b42318;
+  font-weight: 700;
+}
+
+.traders-value-danger--keyword {
+  font-weight: 800;
+}
+
+.traders-value-muted {
+  color: #94a3b8;
+}
+
+.traders-cell-phone {
+  display: grid;
+  gap: 6px;
+}
+
+.traders-cell-phone__row {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.traders-whatsapp-link {
+  color: #16a34a;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.traders-whatsapp-link:hover {
+  text-decoration: underline;
+}
+
+.traders-sale-status-cell {
+  align-items: center;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.traders-fname-cell {
+  align-items: center;
+  display: inline-flex;
+  gap: 8px;
+}
+
+.traders-status-dot {
+  background: #94a3b8;
+  border-radius: 50%;
+  flex-shrink: 0;
+  height: 8px;
+  width: 8px;
+}
+
+.traders-page .dashboard-float-btn svg {
+  height: 20px;
+  width: 20px;
+}
+
 @media (max-width: 760px) {
   .app-shell {
     flex-direction: column;
@@ -992,9 +1539,16 @@ tbody tr:hover {
   }
 
   .page-header,
-  .table-toolbar {
+  .table-toolbar,
+  .traders-toolbar {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .traders-toolbar__filters-settings {
+    margin-left: 0;
+    width: 100%;
+    justify-content: center;
   }
 
   .metric-grid,

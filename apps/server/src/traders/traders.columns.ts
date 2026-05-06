@@ -16,7 +16,7 @@ export const TRADER_TABLE_COLUMNS = [
   { key: "email", title: "Email", show: true, orderable: true, exportable: true, hide: false },
   { key: "phone", title: "Phone", show: true, orderable: true, exportable: true, hide: false },
   { key: "campaign", title: "Campaign", show: true, orderable: true, exportable: true, hide: false },
-  { key: "broker_employee", title: "Broker", show: false, orderable: true, exportable: true, hide: false },
+  { key: "broker_employee", title: "Broker", show: true, orderable: true, exportable: true, hide: false },
   { key: "finance_employee", title: "Finance Broker", show: true, orderable: true, exportable: true, hide: false },
   { key: "desk", title: "Desk", show: true, orderable: true, exportable: true, hide: false },
   { key: "country", title: "Country", show: true, orderable: true, exportable: true, hide: false },
@@ -52,6 +52,6 @@ export const TRADER_TABLE_COLUMNS = [
   { key: "re_deposit_date", title: "Redeposit Date", show: true, orderable: true, exportable: true, hide: false },
   { key: "resident", title: "Resident", show: true, orderable: true, exportable: true, hide: false },
   { key: "mark_ftd_employee", title: "Mark FTD Broker", show: true, orderable: true, exportable: true, hide: false },
-  { key: "registration_city", title: "Registration City", show: false, orderable: false, exportable: false, hide: false },
+  { key: "registration_city", title: "Registration City", show: true, orderable: false, exportable: true, hide: false },
   { key: "registration_ip", title: "Registration IP", show: true, orderable: false, exportable: true, hide: false },
 ] satisfies TraderColumn[];
