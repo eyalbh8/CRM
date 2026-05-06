@@ -865,6 +865,138 @@ tbody tr:hover {
   width: min(100%, 520px);
 }
 
+.modal-card--create-trader {
+  max-height: min(90vh, 860px);
+  max-width: 700px;
+  overflow-y: auto;
+  padding: 0;
+  width: min(100%, 700px);
+}
+
+.modal-header--create-trader {
+  align-items: center;
+  border-bottom: 1px solid #e8edf6;
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  margin-bottom: 0;
+  padding: 20px 28px;
+}
+
+.modal-header__title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.modal-close-x {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  color: #172033;
+  cursor: pointer;
+  display: flex;
+  font-size: 18px;
+  height: 36px;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  width: 36px;
+}
+
+.modal-close-x:hover {
+  background: #f1f5f9;
+}
+
+.create-trader-form--single {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0 28px 28px;
+}
+
+.create-trader-form--single .form-field {
+  border-bottom: 1px solid #f1f5f9;
+  margin-bottom: 0;
+  padding: 18px 0;
+}
+
+.create-trader-form--single .form-field:last-of-type {
+  border-bottom: 0;
+}
+
+.create-trader-form--single .form-field span {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.create-trader-form--single input,
+.create-trader-form--single select,
+.create-trader-form--single textarea {
+  border: 1px solid #dde3ef;
+  border-radius: 10px;
+  font-size: 14px;
+  padding: 11px 14px;
+  width: 100%;
+}
+
+.create-trader-form--single input:focus,
+.create-trader-form--single select:focus,
+.create-trader-form--single textarea:focus {
+  border-color: #26b99f;
+  outline: none;
+}
+
+.create-trader-form--single textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.form-actions--create-trader {
+  align-items: center;
+  border-top: 1px solid #e8edf6;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 8px;
+  padding-top: 20px;
+}
+
+.create-trader-btn {
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 11px 28px;
+}
+
+.create-trader-btn--cancel {
+  background: #f1f5f9;
+  color: #172033;
+}
+
+.create-trader-btn--cancel:hover {
+  background: #e2e8f0;
+}
+
+.create-trader-btn--save {
+  background: #26b99f;
+  color: #fff;
+}
+
+.create-trader-btn--save:hover {
+  background: #1fa088;
+}
+
+.create-trader-btn--save:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
 .modal-header {
   align-items: flex-start;
   display: flex;

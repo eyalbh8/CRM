@@ -570,22 +570,23 @@ export function TradersPage() {
 
       {isCreateOpen ? (
         <div className="modal-backdrop">
-          <section className="modal-card modal-card--large" aria-label="Create New Trader">
-            <div className="modal-header">
-              <div>
-                <p className="eyebrow">Traders</p>
-                <h2>Create New Trader</h2>
-              </div>
+          <section
+            aria-label="Create New Trader"
+            className="modal-card modal-card--create-trader"
+          >
+            <div className="modal-header modal-header--create-trader">
+              <h2 className="modal-header__title">Create New Trader</h2>
               <button
-                className="modal-close"
+                aria-label="Close"
+                className="modal-close-x"
                 type="button"
                 onClick={() => setIsCreateOpen(false)}
               >
-                Close
+                ✕
               </button>
             </div>
 
-            <form className="create-trader-form" onSubmit={handleSubmit}>
+            <form className="create-trader-form create-trader-form--single" onSubmit={handleSubmit}>
               <FormInput
                 label="Enter customer first name"
                 name="fname"
@@ -684,16 +685,20 @@ export function TradersPage() {
                 <div className="form-message form-message--error">{formError}</div>
               ) : null}
 
-              <div className="form-actions">
+              <div className="form-actions form-actions--create-trader">
                 <button
-                  className="secondary-action-button"
+                  className="create-trader-btn create-trader-btn--cancel"
                   type="button"
                   onClick={() => setIsCreateOpen(false)}
                 >
-                  Cancel
+                  Close
                 </button>
-                <button className="primary-action-button" disabled={isSubmitting} type="submit">
-                  {isSubmitting ? "Creating..." : "Create Trader"}
+                <button
+                  className="create-trader-btn create-trader-btn--save"
+                  disabled={isSubmitting}
+                  type="submit"
+                >
+                  {isSubmitting ? "Saving..." : "Save"}
                 </button>
               </div>
             </form>
