@@ -1,4 +1,9 @@
-import { Injectable, Logger, UnauthorizedException } from "@nestjs/common";
+import {
+  BadRequestException,
+  Injectable,
+  Logger,
+  UnauthorizedException,
+} from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { hash, verify } from "argon2";
 import { PrismaService } from "@/prisma/prisma.service";
@@ -13,6 +18,11 @@ export type LoginInput = {
 export type LoginResponse = {
   accessToken: string;
   employee: AuthEmployee;
+};
+
+export type ChangePasswordInput = {
+  currentPassword?: unknown;
+  newPassword?: unknown;
 };
 
 @Injectable()
@@ -94,6 +104,64 @@ export class AuthService {
       }),
       employee: authEmployee,
     };
+  }
+
+  async changePassword(employeeId: number, input: ChangePasswordInput): Promise<{ ok: true }> {
+    const currentPassword = normalizeCredential(input.currentPassword);
+    const newPassword = normalizeCredential(input.newPassword);
+
+    if (!currentPassword || !newPassword) {
+      throw new BadRequestException("Current password and new password are required");
+    }
+
+    if (newPassword.length < 8) {
+      throw new BadRequestException("New password must be at least 8 characters");
+    }
+
+    if (currentPassword === newPassword) {
+      throw new BadRequestException("New password must be different from current password");
+    }
+
+    const employee = await this.prisma.employee.findUnique({
+      where: {
+        id: employeeId,
+      },
+      select: {
+        id: true,
+        email: true,
+        active: true,
+        passwordRevoked: true,
+        passwordHash: true,
+      },
+    });
+
+    if (!employee?.email || !employee.active || employee.passwordRevoked || !employee.passwordHash) {
+      throw new UnauthorizedException("Authentication required");
+    }
+
+    const currentPasswordMatches = await verify(
+      employee.passwordHash,
+      toPasswordSecret(employee.email, currentPassword),
+    );
+
+    if (!currentPasswordMatches) {
+      this.logger.warn(`Password change rejected for employee ${employee.id}: current password mismatch`);
+      throw new UnauthorizedException("Invalid current password");
+    }
+
+    await this.prisma.employee.update({
+      where: {
+        id: employee.id,
+      },
+      data: {
+        passwordHash: await hash(toPasswordSecret(employee.email, newPassword)),
+        passwordRevoked: false,
+      },
+    });
+
+    this.logger.log(`Password changed for employee ${employee.id}`);
+
+    return { ok: true };
   }
 }
 

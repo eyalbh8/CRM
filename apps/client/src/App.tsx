@@ -9,6 +9,7 @@ import { CustomerDocumentsPage } from "./customer-documents/CustomerDocumentsPag
 import { Dashboard } from "./dashboard/Dashboard";
 import { DesksPage } from "./desks/DesksPage";
 import { EmployeesPage } from "./employees/EmployeesPage";
+import { SettingsPage } from "./settings/SettingsPage";
 import { TradingAccountsPage } from "./trading-accounts/TradingAccountsPage";
 import { TransactionsPage } from "./transactions/TransactionsPage";
 import { TradersPage } from "./traders/TradersPage";
@@ -171,7 +172,7 @@ export default function App() {
         ) : activePage === "trading-server-positions" ? (
           <PlaceholderPage title="Trading Server Positions" />
         ) : activePage === "settings" ? (
-          <PlaceholderPage title="Settings" />
+          <SettingsPage />
         ) : activePage === "support" ? (
           <PlaceholderPage title="Support" />
         ) : (

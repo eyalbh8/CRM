@@ -1,7 +1,12 @@
 import { Body, Controller, Get, Logger, Post, Req, Res } from "@nestjs/common";
 import type { Response } from "express";
 import { AUTH_COOKIE_NAME, getAuthCookieOptions } from "./auth.config";
-import { AuthService, type LoginInput, type LoginResponse } from "./auth.service";
+import {
+  AuthService,
+  type ChangePasswordInput,
+  type LoginInput,
+  type LoginResponse,
+} from "./auth.service";
 import { Public } from "./public.decorator";
 import type { AuthEmployee, RequestWithEmployee } from "./auth.types";
 
@@ -44,6 +49,17 @@ export class AuthController {
   me(@Req() request: RequestWithEmployee): AuthEmployee {
     this.logger.log(`Auth session request for employee ${request.user?.id ?? "unknown"}`);
     return request.user as AuthEmployee;
+  }
+
+  @Post("change-password")
+  changePassword(
+    @Body() input: ChangePasswordInput,
+    @Req() request: RequestWithEmployee,
+  ): Promise<{ ok: true }> {
+    const employee = request.user as AuthEmployee;
+    this.logger.log(`Password change request for employee ${employee.id}`);
+
+    return this.authService.changePassword(employee.id, input);
   }
 }
 

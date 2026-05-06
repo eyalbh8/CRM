@@ -25,6 +25,7 @@ type LoginResult = {
 type AuthContextValue = {
   employee: AuthEmployee | null;
   isLoading: boolean;
+  changePassword: (currentPassword: string, newPassword: string) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
 };
@@ -97,6 +98,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setEmployee(payload.employee);
   }, []);
 
+  const changePassword = useCallback(async (currentPassword: string, newPassword: string) => {
+    const response = await apiFetch("/auth/change-password", {
+      body: JSON.stringify({ currentPassword, newPassword }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+    });
+
+    if (!response.ok) {
+      const payload = (await response.json().catch(() => null)) as { message?: string } | null;
+      throw new Error(payload?.message || "Failed to change password");
+    }
+  }, []);
+
   const logout = useCallback(async () => {
     try {
       await apiFetch("/auth/logout", {
@@ -109,12 +125,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo(
     () => ({
+      changePassword,
       employee,
       isLoading,
       login,
       logout,
     }),
-    [employee, isLoading, login, logout],
+    [changePassword, employee, isLoading, login, logout],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
