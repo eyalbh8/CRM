@@ -46,6 +46,8 @@ Stop it with:
 npm run compose:down
 ```
 
+**You must keep this database running while using the API.** With Docker Desktop running, start Postgres (`compose:up`) *before* `npm run start` or `npm run server:dev`. If Prisma reports `Can't reach database server at localhost:5432`, Postgres is not listening—start the container or fix `DATABASE_URL` in `apps/server/.env`.
+
 ## Prisma
 
 Copy `apps/server/.env.example` to `apps/server/.env`. The example `DATABASE_URL` matches the Docker Compose database:
