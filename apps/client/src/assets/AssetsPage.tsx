@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { apiFetch } from "../api/client";
 
 type AssetColumn = {
   key: string;
@@ -24,7 +25,6 @@ type TradingHours = Record<
   }
 >;
 
-const apiUrl = import.meta.env.VITE_API_URL ?? "http://localhost:3001";
 const dayOrder = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
 export function AssetsPage() {
@@ -45,7 +45,7 @@ export function AssetsPage() {
         setIsLoading(true);
         setError(null);
 
-        const response = await fetch(`${apiUrl}/assets`, {
+        const response = await apiFetch("/assets", {
           signal: controller.signal,
         });
 

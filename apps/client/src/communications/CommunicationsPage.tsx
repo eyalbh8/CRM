@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { apiFetch } from "../api/client";
 
 type CommunicationColumn = {
   key: string;
@@ -16,8 +17,6 @@ type CommunicationsResponse = {
   data: CommunicationRow[];
 };
 
-const apiUrl = import.meta.env.VITE_API_URL ?? "http://localhost:3001";
-
 export function CommunicationsPage() {
   const [communications, setCommunications] = useState<CommunicationRow[]>([]);
   const [columns, setColumns] = useState<CommunicationColumn[]>([]);
@@ -32,7 +31,7 @@ export function CommunicationsPage() {
         setIsLoading(true);
         setError(null);
 
-        const response = await fetch(`${apiUrl}/communications`, {
+        const response = await apiFetch("/communications", {
           signal: controller.signal,
         });
 

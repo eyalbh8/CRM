@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { apiFetch } from "../api/client";
 
 type EmployeeColumn = {
   key: string;
@@ -16,8 +17,6 @@ type EmployeesResponse = {
   data: EmployeeRow[];
 };
 
-const apiUrl = import.meta.env.VITE_API_URL ?? "http://localhost:3001";
-
 export function EmployeesPage() {
   const [employees, setEmployees] = useState<EmployeeRow[]>([]);
   const [columns, setColumns] = useState<EmployeeColumn[]>([]);
@@ -32,7 +31,7 @@ export function EmployeesPage() {
         setIsLoading(true);
         setError(null);
 
-        const response = await fetch(`${apiUrl}/employees`, {
+        const response = await apiFetch("/employees", {
           signal: controller.signal,
         });
 

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { apiFetch } from "../api/client";
 
 type CampaignColumn = {
   key: string;
@@ -16,8 +17,6 @@ type CampaignsResponse = {
   data: CampaignRow[];
 };
 
-const apiUrl = import.meta.env.VITE_API_URL ?? "http://localhost:3001";
-
 export function CampaignsPage() {
   const [campaigns, setCampaigns] = useState<CampaignRow[]>([]);
   const [columns, setColumns] = useState<CampaignColumn[]>([]);
@@ -32,7 +31,7 @@ export function CampaignsPage() {
         setIsLoading(true);
         setError(null);
 
-        const response = await fetch(`${apiUrl}/campaigns`, {
+        const response = await apiFetch("/campaigns", {
           signal: controller.signal,
         });
 

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import type { ChangeEvent, FormEvent } from "react";
+import { apiFetch } from "../api/client";
 
 type TransactionColumn = {
   key: string;
@@ -56,8 +57,6 @@ type TransactionFormState = {
   comment: string;
 };
 
-const apiUrl = import.meta.env.VITE_API_URL ?? "http://localhost:3001";
-
 const initialFormState: TransactionFormState = {
   trading_account_id: "",
   value: "",
@@ -90,7 +89,7 @@ export function TransactionsPage() {
     setIsLoading(true);
     setError(null);
 
-    const response = await fetch(`${apiUrl}/transactions`, {
+    const response = await apiFetch("/transactions", {
       signal,
     });
 
@@ -205,7 +204,7 @@ export function TransactionsPage() {
     setFormError(null);
 
     try {
-      const response = await fetch(`${apiUrl}/transactions`, {
+      const response = await apiFetch("/transactions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -485,7 +484,7 @@ function FormSelect({
 }
 
 async function loadFormOptions(signal?: AbortSignal) {
-  const response = await fetch(`${apiUrl}/transactions/create-form`, {
+  const response = await apiFetch("/transactions/create-form", {
     signal,
   });
 

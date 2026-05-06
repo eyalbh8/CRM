@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import type { ChangeEvent, FormEvent } from "react";
+import { apiFetch } from "../api/client";
 
 type TraderColumn = {
   key: string;
@@ -47,8 +48,6 @@ type ApiOption = {
   label: string;
   value: number;
 };
-
-const apiUrl = import.meta.env.VITE_API_URL ?? "http://localhost:3001";
 
 const initialFormState: TraderFormState = {
   fname: "",
@@ -159,7 +158,7 @@ export function TradersPage() {
     setIsLoading(true);
     setError(null);
 
-    const response = await fetch(`${apiUrl}/traders`, {
+    const response = await apiFetch("/traders", {
       signal,
     });
 
@@ -237,7 +236,7 @@ export function TradersPage() {
     setFormError(null);
 
     try {
-      const response = await fetch(`${apiUrl}/traders`, {
+      const response = await apiFetch("/traders", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -515,7 +514,7 @@ function FormSelect({
 }
 
 async function loadFormOptions(signal?: AbortSignal) {
-  const response = await fetch(`${apiUrl}/traders/create-form`, {
+  const response = await apiFetch("/traders/create-form", {
     signal,
   });
 

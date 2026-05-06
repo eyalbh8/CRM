@@ -1,5 +1,6 @@
 const { readFile } = require("node:fs/promises");
 const { join } = require("node:path");
+const { hash } = require("argon2");
 const { config } = require("dotenv");
 const { PrismaClient } = require("@prisma/client");
 
@@ -7,6 +8,7 @@ config({ path: join(__dirname, "..", ".env") });
 
 const prisma = new PrismaClient();
 const seedPath = join(__dirname, "..", "..", "..", "seed_items", "employees.json");
+const seedEmployeePassword = "password";
 
 async function main() {
   const seedFile = await readFile(seedPath, "utf8");
@@ -17,12 +19,14 @@ async function main() {
   }
 
   for (const item of payload.items) {
+    const employeeInput = await toEmployeeInput(item);
+
     await prisma.employee.upsert({
       where: {
         id: toNumber(item.id),
       },
-      create: toEmployeeInput(item),
-      update: toEmployeeInput(item),
+      create: employeeInput,
+      update: employeeInput,
     });
   }
 
@@ -34,30 +38,54 @@ async function main() {
     )
   `;
 
-  console.log(`Seeded ${payload.items.length} employees`);
+  console.log(`Seeded ${payload.items.length} employees with default password "${seedEmployeePassword}"`);
 }
 
-function toEmployeeInput(item) {
+async function toEmployeeInput(item) {
+  const id = toNumber(item.id);
+  const login = toStringValue(item.login);
+  const email = toEmployeeEmail(item, id, login);
+
   return {
-    id: toNumber(item.id),
-    login: toStringValue(item.login),
+    id,
+    login,
     fname: toStringValue(item.fname),
     customersCount: toNumber(item.customers_count),
     financeCustomersCount: toNumber(item.finance_customers_count),
     aclPermissions: toJsonValue(item.acl_permissions),
     phoneExtDesk: toNullableString(item.phone_ext_desk),
     phoneExt: toJsonValue(item.phone_ext),
-    email: toNullableString(item.email),
+    email,
     language: toNullableString(item.language),
     google2faEnable: toBoolean(item.google2fa_enable),
     additionalSecurityEnable: toBoolean(item.additional_security_enable),
     department: toNullableString(item.group),
     active: toBoolean(item.active),
     passwordRevoked: toBoolean(item.password_revoked),
+    passwordHash: await hash(toPasswordSecret(email, seedEmployeePassword)),
     createdAt: toDate(item.created_at),
     lastLogin: item.last_login ? toDate(item.last_login) : null,
     actions: toJsonValue(item.actions),
   };
+}
+
+function toPasswordSecret(email, password) {
+  return `${email.toLowerCase()}\0${password}`;
+}
+
+function toEmployeeEmail(item, id, login) {
+  const email = toNullableString(item.email);
+
+  if (email) {
+    return email.toLowerCase();
+  }
+
+  const slug = login
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ".")
+    .replace(/(^\\.+|\\.+$)/g, "");
+
+  return `${slug || "employee"}.${id}@proline.local`;
 }
 
 function toNumber(value) {

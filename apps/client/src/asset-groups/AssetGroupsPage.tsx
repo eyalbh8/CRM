@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { apiFetch } from "../api/client";
 
 type AssetGroupColumn = {
   key: string;
@@ -16,8 +17,6 @@ type AssetGroupsResponse = {
   data: AssetGroupRow[];
 };
 
-const apiUrl = import.meta.env.VITE_API_URL ?? "http://localhost:3001";
-
 export function AssetGroupsPage() {
   const [assetGroups, setAssetGroups] = useState<AssetGroupRow[]>([]);
   const [columns, setColumns] = useState<AssetGroupColumn[]>([]);
@@ -32,7 +31,7 @@ export function AssetGroupsPage() {
         setIsLoading(true);
         setError(null);
 
-        const response = await fetch(`${apiUrl}/asset-groups`, {
+        const response = await apiFetch("/asset-groups", {
           signal: controller.signal,
         });
 

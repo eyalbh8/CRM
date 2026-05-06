@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { apiFetch } from "../api/client";
 
 type CustomerDocumentColumn = {
   key: string;
@@ -16,8 +17,6 @@ type CustomerDocumentsResponse = {
   data: CustomerDocumentRow[];
 };
 
-const apiUrl = import.meta.env.VITE_API_URL ?? "http://localhost:3001";
-
 export function CustomerDocumentsPage() {
   const [documents, setDocuments] = useState<CustomerDocumentRow[]>([]);
   const [columns, setColumns] = useState<CustomerDocumentColumn[]>([]);
@@ -32,7 +31,7 @@ export function CustomerDocumentsPage() {
         setIsLoading(true);
         setError(null);
 
-        const response = await fetch(`${apiUrl}/customer-documents`, {
+        const response = await apiFetch("/customer-documents", {
           signal: controller.signal,
         });
 

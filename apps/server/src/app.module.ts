@@ -2,6 +2,7 @@ import { Module } from "@nestjs/common";
 import { AppController } from "./app.controller";
 import { AssetGroupsModule } from "./asset-groups/asset-groups.module";
 import { AssetsModule } from "./assets/assets.module";
+import { AuthModule } from "./auth/auth.module";
 import { CampaignsModule } from "./campaigns/campaigns.module";
 import { CommunicationsModule } from "./communications/communications.module";
 import { CustomerDocumentsModule } from "./customer-documents/customer-documents.module";
@@ -15,6 +16,7 @@ import { TradersModule } from "./traders/traders.module";
 @Module({
   imports: [
     PrismaModule,
+    AuthModule,
     AssetGroupsModule,
     AssetsModule,
     EmployeesModule,

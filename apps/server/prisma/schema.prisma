@@ -25,13 +25,14 @@ model Employee {
   aclPermissions           Json?           @map("acl_permissions")
   phoneExtDesk             String?         @map("phone_ext_desk")
   phoneExt                 Json?           @map("phone_ext")
-  email                    String?
+  email                    String?         @unique
   language                 String?
   google2faEnable          Boolean         @default(false) @map("google2fa_enable")
   additionalSecurityEnable Boolean         @default(false) @map("additional_security_enable")
   department               String?         @map("group")
   active                   Boolean         @default(true)
   passwordRevoked          Boolean         @default(false) @map("password_revoked")
+  passwordHash             String?         @map("password_hash")
   createdAt                DateTime        @default(now()) @map("created_at") @db.Timestamptz(3)
   lastLogin                DateTime?       @map("last_login") @db.Timestamptz(3)
   actions                  Json?

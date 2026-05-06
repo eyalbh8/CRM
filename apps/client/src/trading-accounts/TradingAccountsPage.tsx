@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { apiFetch } from "../api/client";
 
 type TradingAccountColumn = {
   key: string;
@@ -27,8 +28,6 @@ type TradingAccountsResponse = {
   data: TradingAccountRow[];
 };
 
-const apiUrl = import.meta.env.VITE_API_URL ?? "http://localhost:3001";
-
 export function TradingAccountsPage() {
   const [accounts, setAccounts] = useState<TradingAccountRow[]>([]);
   const [columns, setColumns] = useState<TradingAccountColumn[]>([]);
@@ -44,7 +43,7 @@ export function TradingAccountsPage() {
         setIsLoading(true);
         setError(null);
 
-        const response = await fetch(`${apiUrl}/trading-accounts`, {
+        const response = await apiFetch("/trading-accounts", {
           signal: controller.signal,
         });
 

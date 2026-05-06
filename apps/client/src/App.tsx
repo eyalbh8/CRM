@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { ReactNode } from "react";
 import { AssetGroupsPage } from "./asset-groups/AssetGroupsPage";
 import { AssetsPage } from "./assets/AssetsPage";
+import { useAuth } from "./auth/AuthProvider";
 import { CampaignsPage } from "./campaigns/CampaignsPage";
 import { CommunicationsPage } from "./communications/CommunicationsPage";
 import { CustomerDocumentsPage } from "./customer-documents/CustomerDocumentsPage";
@@ -92,6 +93,7 @@ const navItems: NavItem[] = [
 
 export default function App() {
   const [activePage, setActivePage] = useState<Page>("dashboard");
+  const { employee, logout } = useAuth();
 
   return (
     <div className="app-shell">
@@ -124,6 +126,13 @@ export default function App() {
             </button>
           ))}
         </nav>
+
+        <div className="sidebar-session">
+          <span>{employee?.fname ?? employee?.login}</span>
+          <button type="button" onClick={() => void logout()}>
+            Logout
+          </button>
+        </div>
       </aside>
 
       <main className="page-content">

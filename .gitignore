@@ -7,3 +7,4 @@ apps/server/.env
 !**/.env.example
 coverage
 .DS_Store
+server_keys/

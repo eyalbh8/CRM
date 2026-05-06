@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { apiFetch } from "../api/client";
 
 type DeskColumn = {
   key: string;
@@ -16,8 +17,6 @@ type DesksResponse = {
   data: DeskRow[];
 };
 
-const apiUrl = import.meta.env.VITE_API_URL ?? "http://localhost:3001";
-
 export function DesksPage() {
   const [desks, setDesks] = useState<DeskRow[]>([]);
   const [columns, setColumns] = useState<DeskColumn[]>([]);
@@ -32,7 +31,7 @@ export function DesksPage() {
         setIsLoading(true);
         setError(null);
 
-        const response = await fetch(`${apiUrl}/desks`, {
+        const response = await apiFetch("/desks", {
           signal: controller.signal,
         });
 
