@@ -9,6 +9,7 @@ import { DesksModule } from "./desks/desks.module";
 import { EmployeesModule } from "./employees/employees.module";
 import { PrismaModule } from "./prisma/prisma.module";
 import { TradingAccountsModule } from "./trading-accounts/trading-accounts.module";
+import { TradingLiveModule } from "./trading-live/trading-live.module";
 import { TransactionsModule } from "./transactions/transactions.module";
 import { TradersModule } from "./traders/traders.module";
 
@@ -23,6 +24,7 @@ import { TradersModule } from "./traders/traders.module";
     CommunicationsModule,
     TradersModule,
     TradingAccountsModule,
+    TradingLiveModule,
     TransactionsModule,
     CustomerDocumentsModule,
   ],

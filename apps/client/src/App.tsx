@@ -9,6 +9,7 @@ import { Dashboard } from "./dashboard/Dashboard";
 import { DesksPage } from "./desks/DesksPage";
 import { EmployeesPage } from "./employees/EmployeesPage";
 import { TradingAccountsPage } from "./trading-accounts/TradingAccountsPage";
+import { TradingLivePage } from "./trading-live/TradingLivePage";
 import { TransactionsPage } from "./transactions/TransactionsPage";
 import { TradersPage } from "./traders/TradersPage";
 
@@ -134,7 +135,7 @@ export default function App() {
         ) : activePage === "assets" ? (
           <AssetsPage />
         ) : activePage === "trading-live" ? (
-          <PlaceholderPage title="Trading Live" />
+          <TradingLivePage />
         ) : activePage === "employees" ? (
           <EmployeesPage />
         ) : activePage === "desks" ? (

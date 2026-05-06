@@ -1714,6 +1714,21 @@ tbody tr:hover {
   width: 8px;
 }
 
+.trading-live-pnl--pos {
+  color: #16a34a;
+  font-weight: 700;
+}
+
+.trading-live-toolbar__arrow {
+  font-size: 10px;
+  margin-left: 4px;
+}
+
+.traders-toolbar--simple {
+  border-bottom: 1px solid #e6edf6;
+  padding-bottom: 12px;
+}
+
 .traders-page .dashboard-float-btn svg {
   height: 20px;
   width: 20px;
