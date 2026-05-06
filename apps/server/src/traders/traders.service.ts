@@ -1,5 +1,5 @@
-import { Injectable } from "@nestjs/common";
-import type { Prisma } from "@prisma/client";
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { Prisma } from "@prisma/client";
 import { PrismaService } from "@/prisma/prisma.service";
 import { TRADER_TABLE_COLUMNS, type TraderColumn } from "./traders.columns";
 
@@ -23,6 +23,13 @@ export type CreateTraderInput = {
   broker_id?: unknown;
   trading_server?: unknown;
   comment?: unknown;
+};
+
+/** Partial update (snake_case keys align with table row fields). */
+export type PatchTraderInput = {
+  last_communication?: unknown;
+  note?: unknown;
+  memo?: unknown;
 };
 
 export type TraderCreateFormOption = {
@@ -152,6 +159,56 @@ export class TradersService {
     return this.toTableRow(trader);
   }
 
+  async patch(id: number, input: PatchTraderInput): Promise<TraderRow> {
+    if (!Number.isFinite(id) || id < 1) {
+      throw new NotFoundException();
+    }
+
+    const data: Prisma.TraderUpdateInput = {};
+
+    if ("last_communication" in input) {
+      const text = patchNullableString(input.last_communication);
+      data.lastCommunication = text;
+      data.lastCommunicationDate = text ? new Date() : null;
+    }
+
+    if ("note" in input) {
+      data.note = patchNullableString(input.note);
+    }
+
+    if ("memo" in input) {
+      data.memo = patchNullableString(input.memo);
+    }
+
+    if (Object.keys(data).length === 0) {
+      const existing = await this.prisma.trader.findUnique({
+        where: { id },
+        include: { campaign: true, desk: true },
+      });
+      if (!existing) {
+        throw new NotFoundException();
+      }
+      return this.toTableRow(existing);
+    }
+
+    try {
+      const trader = await this.prisma.trader.update({
+        where: { id },
+        data,
+        include: {
+          campaign: true,
+          desk: true,
+        },
+      });
+      return this.toTableRow(trader);
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2025") {
+        throw new NotFoundException();
+      }
+      throw error;
+    }
+  }
+
   private toTableRow(trader: TraderWithRelations): TraderRow {
     return {
       id: trader.id,
@@ -276,6 +333,17 @@ function toNullableString(value: unknown) {
 
   const trimmedValue = value.trim();
   return trimmedValue.length > 0 ? trimmedValue : null;
+}
+
+function patchNullableString(value: unknown): string | null {
+  if (value === null || value === undefined) {
+    return null;
+  }
+  if (typeof value !== "string") {
+    return null;
+  }
+  const trimmed = value.trim();
+  return trimmed.length > 0 ? trimmed : null;
 }
 
 function toNullableNumber(value: unknown) {

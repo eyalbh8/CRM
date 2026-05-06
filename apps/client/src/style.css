@@ -860,6 +860,11 @@ tbody tr:hover {
   width: min(100%, 900px);
 }
 
+.modal-card--medium {
+  max-width: 520px;
+  width: min(100%, 520px);
+}
+
 .modal-header {
   align-items: flex-start;
   display: flex;
@@ -1346,6 +1351,46 @@ tbody tr:hover {
   width: 18px;
 }
 
+.traders-last-comment-cell {
+  display: grid;
+  gap: 8px;
+  max-width: 280px;
+}
+
+.traders-last-comment-cell__preview {
+  color: #334155;
+  font-size: 13px;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.traders-last-comment-cell__edit {
+  align-self: flex-start;
+  background: transparent;
+  border: 0;
+  color: #2563eb;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.traders-last-comment-cell__edit:hover {
+  color: #1d4ed8;
+}
+
+.traders-text-dialog__textarea {
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.45;
+  min-height: 160px;
+  padding: 10px 12px;
+  resize: vertical;
+  width: 100%;
+}
+
 .traders-note-card {
   border-radius: 8px;
   box-sizing: border-box;
@@ -1391,6 +1436,13 @@ tbody tr:hover {
   line-height: 1.35;
   max-height: 4.05em;
   overflow: hidden;
+}
+
+.traders-note-card__empty {
+  color: #94a3b8;
+  flex: 1;
+  font-size: 12px;
+  font-style: italic;
 }
 
 .traders-mt5-json {
@@ -1484,13 +1536,27 @@ tbody tr:hover {
   gap: 8px;
 }
 
-.traders-whatsapp-link {
+.traders-whatsapp-chip {
+  align-items: center;
   color: #16a34a;
+  column-gap: 8px;
+  display: inline-flex;
+  margin-top: 2px;
+  text-decoration: none;
+}
+
+.traders-whatsapp-chip__icon {
+  flex-shrink: 0;
+  height: 22px;
+  width: 22px;
+}
+
+.traders-whatsapp-chip__label {
   font-size: 12px;
   font-weight: 800;
 }
 
-.traders-whatsapp-link:hover {
+.traders-whatsapp-chip:hover .traders-whatsapp-chip__label {
   text-decoration: underline;
 }
 

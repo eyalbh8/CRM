@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post } from "@nestjs/common";
 import {
   TradersService,
   type CreateTraderInput,
+  type PatchTraderInput,
   type TraderCreateFormResponse,
   type TraderRow,
   type TradersTableResponse,
@@ -24,5 +25,13 @@ export class TradersController {
   @Post()
   create(@Body() input: CreateTraderInput): Promise<TraderRow> {
     return this.tradersService.create(input);
+  }
+
+  @Patch(":id")
+  patch(
+    @Param("id", ParseIntPipe) id: number,
+    @Body() input: PatchTraderInput,
+  ): Promise<TraderRow> {
+    return this.tradersService.patch(id, input);
   }
 }

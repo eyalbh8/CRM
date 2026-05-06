@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type { ChangeEvent, FormEvent, ReactNode, SVGProps } from "react";
 
 import {
@@ -21,6 +21,25 @@ type TraderRow = Record<string, unknown>;
 type TradersResponse = {
   columns: TraderColumn[];
   data: TraderRow[];
+};
+
+type TraderTextDialogState =
+  | null
+  | {
+      kind: "comment" | "note" | "memo";
+      traderId: number;
+      title: string;
+      initialValue: string;
+    };
+
+type TraderTableActions = {
+  openCommentModal: (row: TraderRow) => void;
+  noteOpenModal: (row: TraderRow) => void;
+  memoOpenModal: (row: TraderRow) => void;
+  noteCardChecked: (traderId: number) => boolean;
+  noteToggleCard: (traderId: number, checked: boolean) => void;
+  memoCardChecked: (traderId: number) => boolean;
+  memoToggleCard: (traderId: number, checked: boolean) => void;
 };
 
 type Option = {
@@ -164,6 +183,12 @@ export function TradersPage() {
   const [formError, setFormError] = useState<string | null>(null);
   const [isLoadingCreateForm, setIsLoadingCreateForm] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [textDialog, setTextDialog] = useState<TraderTextDialogState>(null);
+  const [textDialogDraft, setTextDialogDraft] = useState("");
+  const [textDialogError, setTextDialogError] = useState<string | null>(null);
+  const [isSavingTextDialog, setIsSavingTextDialog] = useState(false);
+  const [noteCardChecks, setNoteCardChecks] = useState<Record<string, boolean>>({});
+  const [memoCardChecks, setMemoCardChecks] = useState<Record<string, boolean>>({});
 
   async function loadTraders(signal?: AbortSignal, options?: { soft?: boolean }) {
     if (!options?.soft) {
@@ -216,6 +241,14 @@ export function TradersPage() {
     return () => controller.abort();
   }, []);
 
+  useEffect(() => {
+    if (!textDialog) {
+      return;
+    }
+    setTextDialogDraft(textDialog.initialValue);
+    setTextDialogError(null);
+  }, [textDialog]);
+
   const totalRows = traders.length;
   const totalPages = Math.max(1, Math.ceil(totalRows / PAGE_SIZE));
 
@@ -262,6 +295,97 @@ export function TradersPage() {
       setIsLoadingCreateForm(false);
     }
   }
+
+  const closeTextDialog = useCallback(() => {
+    setTextDialog(null);
+    setTextDialogError(null);
+  }, []);
+
+  async function handleSaveTextDialog() {
+    if (!textDialog) {
+      return;
+    }
+
+    setIsSavingTextDialog(true);
+    setTextDialogError(null);
+    const tid = textDialog.traderId;
+    const trimmed = textDialogDraft.trim();
+
+    const payload =
+      textDialog.kind === "comment"
+        ? { last_communication: trimmed }
+        : textDialog.kind === "note"
+          ? { note: trimmed }
+          : { memo: trimmed };
+
+    try {
+      const response = await fetch(`${apiUrl}/traders/${tid}`, {
+        body: JSON.stringify(payload),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "PATCH",
+      });
+
+      if (!response.ok) {
+        throw new Error(`Save failed with ${response.status}`);
+      }
+
+      const updated = (await response.json()) as TraderRow;
+
+      setTraders((previous) =>
+        previous.map((row) => (Number(row.id) === tid ? updated : row)),
+      );
+      setTextDialog(null);
+    } catch (caughtError) {
+      setTextDialogError(caughtError instanceof Error ? caughtError.message : "Save failed");
+    } finally {
+      setIsSavingTextDialog(false);
+    }
+  }
+
+  const traderActions = useMemo(
+    (): TraderTableActions => ({
+      memoCardChecked: (traderId) => Boolean(memoCardChecks[String(traderId)]),
+      memoOpenModal: (row: TraderRow) => {
+        setTextDialog({
+          initialValue: typeof row.memo === "string" ? row.memo : "",
+          kind: "memo",
+          title: "Memo",
+          traderId: Number(row.id),
+        });
+      },
+      memoToggleCard: (traderId, checked) =>
+        setMemoCardChecks((prev) => ({
+          ...prev,
+          [String(traderId)]: checked,
+        })),
+      noteCardChecked: (traderId) => Boolean(noteCardChecks[String(traderId)]),
+      noteOpenModal: (row: TraderRow) => {
+        setTextDialog({
+          initialValue: typeof row.note === "string" ? row.note : "",
+          kind: "note",
+          title: "Note",
+          traderId: Number(row.id),
+        });
+      },
+      noteToggleCard: (traderId, checked) =>
+        setNoteCardChecks((prev) => ({
+          ...prev,
+          [String(traderId)]: checked,
+        })),
+      openCommentModal: (row: TraderRow) => {
+        setTextDialog({
+          initialValue:
+            typeof row.last_communication === "string" ? row.last_communication : "",
+          kind: "comment",
+          title: "Last comment",
+          traderId: Number(row.id),
+        });
+      },
+    }),
+    [memoCardChecks, noteCardChecks],
+  );
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -355,7 +479,7 @@ export function TradersPage() {
         page={page}
         pageSize={PAGE_SIZE}
         renderCell={({ columnKey, value, row, defaultRenderer }) =>
-          formatTraderCell(columnKey, value, row as TraderRow, defaultRenderer)
+          formatTraderCell(columnKey, value, row as TraderRow, defaultRenderer, traderActions)
         }
         rows={traders}
         selection={{
@@ -380,6 +504,72 @@ export function TradersPage() {
       >
         ↑
       </button>
+
+      {textDialog ? (
+        <div className="modal-backdrop">
+          <section
+            aria-labelledby="trader-text-dialog-title"
+            aria-modal
+            className="modal-card modal-card--medium"
+            role="dialog"
+          >
+            <div className="modal-header">
+              <div>
+                <p className="eyebrow">Traders</p>
+                <h2 id="trader-text-dialog-title">{textDialog.title}</h2>
+              </div>
+              <button
+                aria-label="Close"
+                className="modal-close"
+                disabled={isSavingTextDialog}
+                type="button"
+                onClick={closeTextDialog}
+              >
+                Close
+              </button>
+            </div>
+
+            <label className="form-field form-field--full">
+              <span>
+                {textDialog.kind === "comment"
+                  ? "Comment"
+                  : textDialog.kind === "note"
+                    ? "Note"
+                    : "Memo"}
+              </span>
+              <textarea
+                className="traders-text-dialog__textarea"
+                onChange={(event) => setTextDialogDraft(event.target.value)}
+                rows={8}
+                value={textDialogDraft}
+              />
+            </label>
+
+            {textDialogError ? (
+              <div className="form-message form-message--error">{textDialogError}</div>
+            ) : null}
+
+            <div className="form-actions">
+              <button
+                className="secondary-action-button"
+                disabled={isSavingTextDialog}
+                type="button"
+                onClick={closeTextDialog}
+              >
+                Cancel
+              </button>
+              <button
+                className="primary-action-button"
+                disabled={isSavingTextDialog}
+                type="button"
+                onClick={() => void handleSaveTextDialog()}
+              >
+                {isSavingTextDialog ? "Saving..." : "Save"}
+              </button>
+            </div>
+          </section>
+        </div>
+      ) : null}
 
       {isCreateOpen ? (
         <div className="modal-backdrop">
@@ -652,12 +842,30 @@ function IconChatBubble(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+/** WhatsApp logo path from Simple Icons (CC0). Brand color: #25D366. */
+function IconWhatsAppMark(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <path
+        fill="#25D366"
+        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"
+      />
+    </svg>
+  );
+}
+
 function NoteMemoCard({
+  checked,
+  onOpenView,
+  onToggle,
   variant,
   value,
 }: {
   variant: "Note" | "Memo";
   value: unknown;
+  checked: boolean;
+  onToggle: (next: boolean) => void;
+  onOpenView: () => void;
 }) {
   const text = typeof value === "string" ? value.trim() : value != null ? String(value) : "";
   const hasContent = text.length > 0;
@@ -665,15 +873,30 @@ function NoteMemoCard({
   return (
     <div className={`traders-note-card traders-note-card--${variant === "Note" ? "note" : "memo"}`}>
       <div className="traders-note-card__head">
-        <input aria-label={`${variant} selected`} className="traders-note-card__check" type="checkbox" />
+        <input
+          aria-label={`${variant} flagged for bulk action`}
+          checked={checked}
+          className="traders-note-card__check"
+          type="checkbox"
+          onChange={(event) => onToggle(event.target.checked)}
+          onClick={(event) => event.stopPropagation()}
+        />
         <span>{variant}</span>
       </div>
       <div className="traders-note-card__body">
-        {hasContent ? <span className="traders-note-card__preview">{text}</span> : null}
+        {hasContent ? (
+          <span className="traders-note-card__preview">{text}</span>
+        ) : (
+          <span className="traders-note-card__empty">No content yet</span>
+        )}
         <button
-          aria-label={`View ${variant.toLowerCase()}`}
+          aria-label={`View or edit ${variant.toLowerCase()}`}
           className="traders-icon-btn traders-icon-btn--link"
           type="button"
+          onClick={(event) => {
+            event.stopPropagation();
+            onOpenView();
+          }}
         >
           <IconEye className="traders-inline-icon" />
         </button>
@@ -729,6 +952,7 @@ function formatTraderCell(
   value: unknown,
   row: TraderRow,
   defaultRenderer: (cellValue: unknown) => ReactNode,
+  actions: TraderTableActions,
 ): ReactNode {
   if (columnKey === "id") {
     const id = typeof value === "number" ? value : Number(value);
@@ -795,17 +1019,19 @@ function formatTraderCell(
           >
             <IconCopy className="traders-inline-icon" />
           </button>
-          {wa.length >= 8 ? (
-            <a
-              className="traders-whatsapp-link"
-              href={`https://wa.me/${wa}`}
-              rel="noreferrer"
-              target="_blank"
-            >
-              WhatsApp
-            </a>
-          ) : null}
         </div>
+        {wa.length >= 8 ? (
+          <a
+            aria-label={`WhatsApp chat with ${phone}`}
+            className="traders-whatsapp-chip"
+            href={`https://wa.me/${wa}`}
+            rel="noreferrer"
+            target="_blank"
+          >
+            <IconWhatsAppMark aria-hidden className="traders-whatsapp-chip__icon" />
+            <span className="traders-whatsapp-chip__label">WhatsApp</span>
+          </a>
+        ) : null}
       </div>
     );
   }
@@ -927,10 +1153,26 @@ function formatTraderCell(
   if (columnKey === "last_communication") {
     const text = typeof value === "string" ? value.trim() : "";
     if (text) {
-      return <span>{text}</span>;
+      return (
+        <div className="traders-last-comment-cell">
+          <p className="traders-last-comment-cell__preview">{text}</p>
+          <button
+            aria-label="Edit last comment"
+            className="traders-last-comment-cell__edit"
+            type="button"
+            onClick={() => actions.openCommentModal(row)}
+          >
+            Edit comment
+          </button>
+        </div>
+      );
     }
     return (
-      <button className="traders-add-comment-btn" type="button">
+      <button
+        className="traders-add-comment-btn"
+        type="button"
+        onClick={() => actions.openCommentModal(row)}
+      >
         <IconChatBubble className="traders-add-comment-btn__icon" />
         Add comment
       </button>
@@ -949,11 +1191,29 @@ function formatTraderCell(
   }
 
   if (columnKey === "note") {
-    return <NoteMemoCard variant="Note" value={value} />;
+    const traderId = Number(row.id);
+    return (
+      <NoteMemoCard
+        checked={actions.noteCardChecked(traderId)}
+        value={value}
+        variant="Note"
+        onOpenView={() => actions.noteOpenModal(row)}
+        onToggle={(checked) => actions.noteToggleCard(traderId, checked)}
+      />
+    );
   }
 
   if (columnKey === "memo") {
-    return <NoteMemoCard variant="Memo" value={value} />;
+    const traderId = Number(row.id);
+    return (
+      <NoteMemoCard
+        checked={actions.memoCardChecked(traderId)}
+        value={value}
+        variant="Memo"
+        onOpenView={() => actions.memoOpenModal(row)}
+        onToggle={(checked) => actions.memoToggleCard(traderId, checked)}
+      />
+    );
   }
 
   if (columnKey === "import_a_bid" || columnKey === "import_a_cid") {
